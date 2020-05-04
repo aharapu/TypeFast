@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Type Fast</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			media="screen"
+			href="style/main.css"
+		/>
+		<script src="script/main.js" defer></script>
+		<script src="script/jquery-3.5.0.js" defer></script>
+	</head>
+	<body>
+		<div>
+			<header id="header">
+				<div id="intro">
+					<p>
+						Make a choice and make sure it's a good one!
+					</p>
+				</div>
+				<br />			
+				<button id="howTo-button" type="button">HOW TO PLAY</button>
+				<button id="noob-mode" type="button">NOOB MODE</button>
+				<button id="normal-mode" type="button">NORMAL</button>
+				<button id="beast-mode" type="button">BEAST MODE</button>
+				<br/>
+				<button id="start-button" type="button">START!</button>
+			</header>
+		</div>
+		<section>
+			<h2>
+				<span id="test-sentence"></span>
+			</h2>
+		</section>
+
+		<section id="text-box">
+			<p><span id="first-part"></span><span id="current-sentence">Type this first.</span></p>
+			<input type="string" id="input-string" placeholder="Type here..." />
+		</section>
+
+		<section id="result">
+			<h3 id="current-result">Let's see how you do...</h3>
+			<progress id="time-bar" max="30" value="30"></progress>
+		</section>
+	</body>
+</html>
