@@ -15,36 +15,33 @@
 		<script src="script/jquery-3.5.0.js" defer></script>
 	</head>
 	<body>
-		<div>
-			<header id="header">
-				<div id="intro">
-					<p>
-						Make a choice and make sure it's a good one!
-					</p>
-				</div>
-				<br />			
-				<button id="howTo-button" type="button">HOW TO PLAY</button>
-				<button id="noob-mode" type="button">NOOB MODE</button>
-				<button id="normal-mode" type="button">NORMAL</button>
-				<button id="beast-mode" type="button">BEAST MODE</button>
-				<br/>
-				<button id="start-button" type="button">START!</button>
-			</header>
-		</div>
-		<section>
-			<h2>
-				<span id="test-sentence"></span>
-			</h2>
-		</section>
+		<header>
+			<p>
+				Make a choice and make sure it's a good one!
+			</p>
+
+			<br />
+			<nav>
+				<button type="button" id="howTo-button">HOW TO PLAY</button>
+				<button class="green" type="button" id="noob-mode">NOOB MODE</button>
+				<button id="normal-mode" type="button" >NORMAL</button>
+				<button id="beast-mode" class="red" type="button" >BEAST MODE</button>
+				<br />
+				<button class="green" id="start-button" type="button">START!</button>
+			</nav>
+		</header>
 
 		<section id="text-box">
-			<p><span id="first-part"></span><span id="current-sentence">Type this first.</span></p>
-			<input type="string" id="input-string" placeholder="Type here..." />
+			<p class="tBoxElement">
+				<span id="first-part"></span>
+				<span id="current-sentence">Type this first.</span>
+			</p>
+			<input class="tBoxElement" id="input-string" type="string" placeholder="Type here..." />
 		</section>
 
 		<section id="result">
-			<h3 id="current-result">Let's see how you do...</h3>
-			<progress id="time-bar" max="30" value="30"></progress>
+			<h3 class="tBoxElement" id="current-result">Let's see how you do...</h3>
+			<progress class="tBoxElement" id="time-bar" max="30" value="30">30%</progress>
 		</section>
 	</body>
 </html>

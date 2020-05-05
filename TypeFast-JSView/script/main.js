@@ -40,6 +40,7 @@ function setNoobMode() {
 	beastModeButton.style.opacity = "0.7";
 	inputString.setAttribute("type", "string");
 	compareSentencesLive("on");
+	makeGreen();
 }
 function setNormalMode() {
 	noobModeButton.style.opacity = "0.7";
@@ -118,6 +119,7 @@ inputString.addEventListener("keypress", function (e) {
 });
 
 // STRING COMPARING FOR NOOB MODE
+// console.log('Hey'.startsWith('H')); // Prints true  <-- somthing to use?
 function compareSentencesLive(onOff) {
 	if (onOff === "on") {
 		inputString.addEventListener("keyup", makeGreen);
@@ -128,7 +130,7 @@ function compareSentencesLive(onOff) {
 	}
 }
 
-function makeGreen (e) {
+function makeGreen () {
 	// let sentenceToCheckWith = String(currentSentence.innerHTML);
 	const enteredSentence = String(inputString.value);
 	let sLength = enteredSentence.length;

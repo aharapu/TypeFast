@@ -2,140 +2,83 @@
 	font-family: GameTime;
 	src: url(../assets/Cabin-Medium.ttf);
 }
-
 * {
 	font-family: GameTime;
+	font-size: 19px;
 	box-sizing: border-box;
+	margin: 0 auto;
+	text-align: center;
+	display: block;
 }
-
-body {
-	margin: 0;
-}
-
 header {
 	background: #720505;
 	color: rgb(243, 243, 243);
 	padding: 1rem;
-	text-align: center;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.26);
 	width: 100%;
 	height: auto;
 }
-
-#intro {
-	margin:auto;
-	width: 600px;
-	font-size: 1.3rem;
-	border: #010e18;
-	text-align: center;
-}
-
-button {
+nav button {
+	display: inline;
 	background-color: #ac5cbf;
-	border: 2px solid #ac5cbf ;
+	border: 2px solid #ac5cbf;
 	border-radius: 5px;
-	margin:6px 3px;
+	margin: 6px 3px;
 	color: white;
 	padding: 10px 20px;
-	text-align: center;
 	font-size: 18px;
 	cursor: pointer;
 	transition-duration: 0.3s;
-	box-shadow: 0 3px 3px 0 rgba(0,0,0,0.2), 0 5px 10px 0 rgba(0,0,0,0.19);
+	box-shadow: 3px 5px 10px 0 rgba(0, 0, 0, 0.4);
 }
-
-button:hover {
+nav button:hover {
 	background-color: white;
 	color: black;
 }
-
 button:focus {
 	outline: none;
 }
-
-#start-button {
-	background-color: #7bef00;
-	border: 2px solid #7bef00 ;
-	width: 300px;
-}
-
-#noob-mode {
+.green {
 	background-color: #4caf50;
-	border: 2px solid #4CAF50 ;
+	border: 2px solid #4caf50;
 }
-
-#noob-mode:hover {
-	background-color: white;
-	color: black;
-}
-
-#standard-mode {
-	background-color: rgb(24, 94, 187);
-	border-color: rgb(24, 94, 187);
-}
-
-#standard-mode:hover {
-	background-color: white;
-	color: black;
-}
-
-#beast-mode {
+.red {
 	background-color: rgb(221, 34, 1);
 	border-color: rgb(221, 34, 1);
 }
-
-#beast-mode:hover {
-	background-color: white;
-	color: black;
+#start-button {
+	width: 300px;
 }
-
+span {
+	display: inline-block;
+}
 #first-part {
-	color: green;
+	color: rgb(0, 88, 0);
 }
-
+#text-box, #result {
+	margin: 25px auto;
+	width: 90%;
+	max-width: 650px;
+	border: 3px solid #023d6d;
+	border-radius: 10px;
+}
+.tBoxElement {
+	margin: 30px auto;
+}
 #text-box {
 	background-color: #ea8b8b;
+	margin: 30px auto;
 }
-
-#text-box,
-#result {
-	text-align: center;
-	font-size: 1.3rem;
-	margin: 2rem auto;
-	width: 40rem;
-	max-width: 95%;
-	border: 2px solid #023d6d;
-	border-radius: 6px;
-	padding: 1rem;
-	color: #010e18;
-}
-
-#result {
-	text-align: center;
-}
-
 #text-box input {
-	font: inherit;
-	border: 5px solid #023d6d;
-	width: 31rem;
-	max-width:inherit;
-	padding: 0.2rem;
-	margin: auto;
-	display: block;
-	color: #011424;
-	text-align: center;
+	border: 2px solid rgb(221, 34, 1);
+	border-radius: 5px;
+	width: 400px;
+	max-width: 70%;
 }
-
 #text-box input:focus {
 	outline: none;
 }
-
 #time-bar {
-	display: block; /* default: inline-block */
-	width: 300px;
-	max-width:inherit;
-  	margin: 2em auto;
-  	padding: 4px;
-  	background: rgb(0, 0, 0);
-  	border-radius: 6px;
+	width: 400px;
+	max-width: 90%;
 }
