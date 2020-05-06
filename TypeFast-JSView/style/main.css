@@ -49,7 +49,7 @@ button:focus {
 #start-button {
 	width: 300px;
 }
-span {
+div, pre {
 	display: inline-block;
 }
 #first-part {
