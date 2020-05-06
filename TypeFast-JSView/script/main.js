@@ -22,7 +22,7 @@ noobModeButton.addEventListener("click", setNoobMode);
 normalModeButton.addEventListener("click", setNormalMode);
 beastModeButton.addEventListener("click", setBeastMode);
 
-let currentSentence = String(currentSentenceElement.innerHTML);
+let currentSentence = String(currentSentenceElement.innerText);
 let nextSentence = "The second sentence is always the same."; // fix this whe api is done
 let timeOver = false;
 let gameIsRunning = false;
@@ -59,7 +59,7 @@ function setBeastMode() {
 
 // GAME INITIALIZATION
 function startGame() {
-	startButton.innerHTML = "Type as fast as you can!";
+	startButton.innerText = "Type as fast as you can!";
 	startButton.style.cursor = "not-allowed";
 	startButton.style.opacity = "0.7";
 	$("#input-string").focus();
@@ -75,7 +75,7 @@ function turnTimerOn() {
 		timeBar.value -= 1;
 		if (timeBar.value <= 0) {
 			clearInterval(x);
-			currentResult.innerHTML = "TIME OUT, YOU LOST, LOSER, GO HOME!";
+			currentResult.innerText = "TIME OUT, YOU LOST, LOSER, GO HOME!";
 			alert("game over");
 
 			// add new sentence into DB via API call
@@ -113,7 +113,7 @@ inputString.addEventListener("keypress", function (e) {
 			currentResult.innerHTML = "You wasted time, try another sentence!";
 		}
 		currentSentence = nextSentence;
-		currentSentence.innerHTML = currentSentence;
+		currentSentenceElement.innerHTML = currentSentence;
 		httpGetAsync(GET_REQ_URL, setNextSentence); // api call here
 	}
 });
@@ -125,20 +125,18 @@ function compareSentencesLive(onOff) {
 		inputString.addEventListener("keyup", makeGreen);
 	} else {
 		inputString.removeEventListener("keyup", makeGreen);
-		greenSentenceH2.innerHTML = "";
-		currentSentenceElement.innerHTML = currentSentence;
+		greenSentenceH2.innerText = "";
+		currentSentenceElement.innerText = currentSentence;
 	}
 }
 
-function makeGreen () {
-	// let sentenceToCheckWith = String(currentSentence.innerHTML);
+function makeGreen () {  	// WEIRD SHIT GOING ON, NEEDS REFACTORING
 	const enteredSentence = String(inputString.value);
+	console.log(enteredSentence);
 	let sLength = enteredSentence.length;
-
-	// greenSentenceH2.innerHTML = sentenceToCheckWith.substring(0,howLong);
 	if (sLength <= currentSentence.length && enteredSentence == currentSentence.substring(0,sLength)) {
-		greenSentenceH2.innerHTML = enteredSentence;
-		currentSentenceElement.innerHTML = currentSentence.substring(sLength);
+		greenSentenceH2.innerText = enteredSentence;
+		currentSentenceElement.innerText = currentSentence.substring(sLength);
 	}
 	
 }
