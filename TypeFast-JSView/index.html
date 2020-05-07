@@ -24,23 +24,33 @@
 			<nav>
 				<button type="button" id="howTo-button">HOW TO PLAY</button>
 				<button class="green" type="button" id="noob-mode">NOOB MODE</button>
-				<button id="normal-mode" type="button" >NORMAL</button>
-				<button id="beast-mode" class="red" type="button" >BEAST MODE</button>
+				<button id="normal-mode" type="button">NORMAL</button>
+				<button id="beast-mode" class="red" type="button">BEAST MODE</button>
 				<br />
 				<button class="green" id="start-button" type="button">START!</button>
 			</nav>
 		</header>
+		<main>
+			<section id="text-box">
+				<div class="tBoxElement">
+					<pre id="first-part"></pre>
+					<pre id="current-sentence">Type this first.</pre>
+				</div>
+				<input
+					class="tBoxElement"
+					id="input-string"
+					type="string"
+					placeholder="Type here..."
+				/>
+			</section>
 
-		<section id="text-box">
-			<div class="tBoxElement">
-				<pre id="first-part"></pre><pre id="current-sentence">Type this first.</pre>
-			</div>
-			<input class="tBoxElement" id="input-string" type="string" placeholder="Type here..." />
-		</section>
-
-		<section id="result">
-			<h3 class="tBoxElement" id="current-result">Let's see how you do...</h3>
-			<progress class="tBoxElement" id="time-bar" max="30" value="30">30%</progress>
-		</section>
+			<section id="result">
+				<p class="tBoxElement" id="current-result">Let's see how you do...</p>
+				<progress class="tBoxElement" id="time-bar" max="30" value="30"> 30% </progress>
+				<div class="progress-container">
+					<div id="progress-bar">30</div>
+				</div>
+			</section>
+		</main>
 	</body>
 </html>

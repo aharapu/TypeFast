@@ -1,8 +1,10 @@
+/* GENERAL RULES */
 @font-face {
 	font-family: GameTime;
 	src: url(../assets/Cabin-Medium.ttf);
 }
 * {
+	color: white;
 	font-family: GameTime;
 	font-size: 19px;
 	box-sizing: border-box;
@@ -10,6 +12,7 @@
 	text-align: center;
 	display: block;
 }
+/* HEADER AND NAV AREA */
 header {
 	background: #720505;
 	color: rgb(243, 243, 243);
@@ -49,13 +52,10 @@ button:focus {
 #start-button {
 	width: 300px;
 }
-div, pre {
-	display: inline-block;
-}
-#first-part {
-	color: rgb(0, 88, 0);
-}
-#text-box, #result {
+/* GENERAL MAIN RULES */
+#text-box,
+#result {
+	background-color: rgba(44.7%, 2%, 2%, 0.7);
 	margin: 25px auto;
 	width: 90%;
 	max-width: 650px;
@@ -65,20 +65,49 @@ div, pre {
 .tBoxElement {
 	margin: 30px auto;
 }
+/* CURRENT SENTENCE AND INPUT AREA */
+pre {
+	display: inline-block;
+}
+#first-part {
+	color: rgb(0, 88, 0);
+}
 #text-box {
-	background-color: #ea8b8b;
 	margin: 30px auto;
 }
 #text-box input {
 	border: 2px solid rgb(221, 34, 1);
 	border-radius: 5px;
 	width: 400px;
-	max-width: 70%;
+	max-width: 90%;
+	margin-top: 0;
 }
 #text-box input:focus {
 	outline: none;
 }
+/* RESULT AND TIME BAR AREA */
 #time-bar {
 	width: 400px;
 	max-width: 90%;
 }
+
+.progress-container {
+	background-color: teal;
+	width: 400px;
+	max-width: 90%;
+	margin: 30px auto;
+}
+
+.progress-container div {
+	background-color: hsl(108, 94%, 28%);
+	color: white;
+	font-size: 16px;
+	font-weight: 500;
+	height: 20px;
+	width: 100%;
+	margin: 0;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+  }

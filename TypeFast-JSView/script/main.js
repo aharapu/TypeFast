@@ -4,12 +4,14 @@ const inputString = document.getElementById("input-string");
 const currentResult = document.getElementById("current-result");
 const currentSentenceElement = document.getElementById("current-sentence");
 const timeBar = document.getElementById("time-bar");
+const progressBar = document.getElementById("progress-bar");
 const startButton = document.getElementById("start-button");
 const howToButton = document.getElementById("howTo-button");
 const noobModeButton = document.getElementById("noob-mode");
 const normalModeButton = document.getElementById("normal-mode");
 const beastModeButton = document.getElementById("beast-mode");
 const greenSentenceH2 = document.getElementById("first-part");
+
 
 const GET_REQ_URL = "http://localhost:8080/getSentencesDB/getSentence";
 const PUT_REQ_URL = "http://localhost:8080/getSentencesDB/add";
@@ -27,6 +29,7 @@ let nextSentence = "The second sentence is always the same."; // fix this whe ap
 let timeOver = false;
 let gameIsRunning = false;
 let score = 0;
+let secondsLeft = 0;
 
 // SHOW HOW TO
 function howTo() {
@@ -66,6 +69,7 @@ function startGame() {
 	turnTimerOn();
 	gameIsRunning = true;
 	timeBar.value = "30";
+	secondsLeft = 30;
 	score = 0;
 }
 
@@ -73,6 +77,17 @@ function startGame() {
 function turnTimerOn() {
 	let x = setInterval(function () {
 		timeBar.value -= 1;
+		secondsLeft--
+		const secondsInPercentage = secondsLeft / 30 * 100;
+		progressBar.style.width = `${secondsInPercentage}%`;
+		progressBar.innerText = secondsLeft;
+		switch (true) {
+			case (secondsLeft < 6) : progressBar.style.backgroundColor = "hsl(0, 90%, 45%)";
+				break;
+			case (secondsLeft < 11) : progressBar.style.backgroundColor = "hsl(21, 94%, 50%)";
+				break;
+			default: progressBar.style.backgroundColor = "hsl(108, 94%, 28%)";
+		}
 		if (timeBar.value <= 0) {
 			clearInterval(x);
 			currentResult.innerText = "TIME OUT, YOU LOST, LOSER, GO HOME!";
