@@ -11,8 +11,15 @@
 			media="screen"
 			href="style/main.css"
 		/>
-		<script src="script/main.js" defer></script>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			media="screen"
+			href="style/modal.css"
+		/>
 		<script src="script/jquery-3.5.0.js" defer></script>
+		<script src="script/modal.js" defer></script>
+		<script src="script/main.js" defer></script>		
 	</head>
 	<body>
 		<header>
@@ -22,10 +29,11 @@
 
 			<br />
 			<nav>
-				<button type="button" id="howTo-button">HOW TO PLAY</button>
-				<button class="green" type="button" id="noob-mode">NOOB MODE</button>
+				<button id="howTo-button" type="button">HOW TO PLAY</button>
+				<button id="noob-mode" type="button"  class="green">NOOB MODE</button>
 				<button id="normal-mode" type="button">NORMAL</button>
-				<button id="beast-mode" class="red" type="button">BEAST MODE</button>
+				<button id="beast-mode" type="button" class="red" >BEAST MODE</button>
+				<button id="myBtn" type="button">HIGH SCORES</button>
 				<br />
 				<button class="green" id="start-button" type="button">START!</button>
 			</nav>
@@ -52,5 +60,15 @@
 				</div>
 			</section>
 		</main>
+
+		<div id="myModal" class="modal">
+
+			<!-- Modal content -->
+			<div class="modal-content">
+			  <span class="close">&times;</span>
+			  <p>Some text in the Modal..</p>
+			</div>
+		  
+		  </div>
 	</body>
 </html>
