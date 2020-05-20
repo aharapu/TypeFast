@@ -5,21 +5,39 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>Type Fast</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link
-			rel="stylesheet"
-			type="text/css"
-			media="screen"
-			href="style/main.css"
-		/>
-		<link
-			rel="stylesheet"
-			type="text/css"
-			media="screen"
-			href="style/modal.css"
-		/>
+		<link rel="stylesheet" type="text/css" media="screen" href="style/main.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="style/modal.css" />
 		<script src="script/jquery-3.5.0.js" defer></script>
 		<script src="script/modal.js" defer></script>
-		<script src="script/main.js" defer></script>		
+		<script src="script/main.js" defer></script>
+		<script src="script/apiCallAndDisplay.js" defer></script>
+
+		<!-- Include Handlebars from a CDN -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"			
+		></script>		
+		<script id="leaderboard-template" type="text/x-handlebars-template">
+			
+			<div class="leaderboard">
+				<table class="leaderboard-table">
+					
+					{{#each players}}
+					<tr>
+						<th>
+							{{incremented @index}}
+						</th>
+						<td>
+							{{name}}
+						</td>
+						<td>
+							{{score}}
+						</td>
+					</tr>
+					{{/each}}
+				</table>				
+			</div>
+			
+		</script>
 	</head>
 	<body>
 		<header>
@@ -30,9 +48,9 @@
 			<br />
 			<nav>
 				<button id="howTo-button" type="button">HOW TO PLAY</button>
-				<button id="noob-mode" type="button"  class="green">NOOB MODE</button>
+				<button id="noob-mode" type="button" class="green">NOOB MODE</button>
 				<button id="normal-mode" type="button">NORMAL</button>
-				<button id="beast-mode" type="button" class="red" >BEAST MODE</button>
+				<button id="beast-mode" type="button" class="red">BEAST MODE</button>
 				<button id="myBtn" type="button">HIGH SCORES</button>
 				<br />
 				<button class="green" id="start-button" type="button">START!</button>
@@ -62,13 +80,12 @@
 		</main>
 
 		<div id="myModal" class="modal">
-
 			<!-- Modal content -->
 			<div class="modal-content">
-			  <span class="close">&times;</span>
-			  <p>Some text in the Modal..</p>
+				<span class="close">&times;</span>
+				<p>Some text in the Modal..</p>
+				<div id="handlebars-leaderboard-container"></div>
 			</div>
-		  
-		  </div>
+		</div>
 	</body>
 </html>

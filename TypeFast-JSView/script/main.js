@@ -25,7 +25,7 @@ normalModeButton.addEventListener("click", setNormalMode);
 beastModeButton.addEventListener("click", setBeastMode);
 
 let currentSentence = String(currentSentenceElement.innerText);
-let nextSentence = "The second sentence is always the same."; // fix this whe api is done
+let nextSentence = "The second sentence is always the same."; // fix this when api is done
 let timeOver = false;
 let gameIsRunning = false;
 let score = 0;
@@ -170,3 +170,68 @@ function httpGetAsync(url, callback) {
 function setNextSentence(responseSentence) {
 	nextSentence = responseSentence;
 }
+
+
+
+// SWITCH THE AJAX GET DONE WITH JQUERRY WITH THIS STANDARD BOILERPLATE
+// const xhr = new XMLHttpRequest();
+// const url = "https://api-to-call.com/endpoint";
+// xhr.responseType = "json";
+// xhr.onreadystatechange = () => {
+//   if (xhr.readyState === XMLHttpRequest.DONE) {
+//     return xhr.response;
+//   }
+// }
+// xhr.open("GET", url);
+// xhr.send();
+
+// USING fetch
+// fetch(endpoint, {cache: 'no-cache'})
+// 	.then(response => {
+//     	if (response.ok) {
+//      		return response.json();
+//     	}
+//     	throw new Error('Request failed!');
+// 	}, networkError => {
+// 		console.log(networkError.message)
+//   	}).then((jsonResponse) => {
+//     renderResponse(jsonResponse);
+// 	})
+
+// ASYNC FETCH GET BOILER
+// const getData = async () => {
+// 	try {
+// 	  const response = await fetch("https://api-to-call.com/endpoint");
+// 	  if (response.ok) {
+// 		const jsonResponse = await response.json();
+// 		return jsonResponse;
+// 	  }
+// 	  throw new Error("Request failed!");
+// 	} catch(error) {
+// 	  console.log(error);
+// 	}
+//   };
+
+// ASYNC FETCH POST EXAMPLE
+// const shortenUrl = async () =>{
+// 	const urlToShorten = inputField.value;
+// 	const data = JSON.stringify({destination: urlToShorten});
+  
+// 	try{
+// 	  const response =  await fetch(rebrandlyEndpoint, {
+// 		method: 'POST',
+// 		body: data,
+// 		headers: {
+// 		  "Content-type": "application/json",
+// 		  'apikey': apiKey
+// 		}
+// 	  })
+// 	  if(response.ok){
+// 		const jsonResponse = await response.json();
+// 			  renderByteResponse(jsonResponse);
+// 	  }
+// 	}
+// 	catch(error){
+// 	  console.log(error);
+// 	}
+//   }

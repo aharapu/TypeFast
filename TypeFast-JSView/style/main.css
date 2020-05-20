@@ -3,7 +3,7 @@
 	font-family: GameTime;
 	src: url(../assets/Cabin-Medium.ttf);
 }
-* {
+body * {
 	color: white;
 	font-family: GameTime;
 	font-size: 19px;
@@ -90,14 +90,12 @@ pre {
 	width: 400px;
 	max-width: 90%;
 }
-
 .progress-container {
 	background-color: teal;
 	width: 400px;
 	max-width: 90%;
 	margin: 30px auto;
 }
-
 .progress-container div {
 	background-color: hsl(108, 94%, 28%);
 	color: white;
@@ -108,6 +106,17 @@ pre {
 	margin: 0;
 }
 
+/* LEADERBOARD MODAL */
+table {
+	border: solid white 2px;
+}
+tr {
+	display: table-row;
+}
+th, td {
+	border: solid white 2px;
+	display: table-cell;
+}
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
 
   }
