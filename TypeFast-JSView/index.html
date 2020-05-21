@@ -13,30 +13,33 @@
 		<script src="script/apiCallAndDisplay.js" defer></script>
 
 		<!-- Include Handlebars from a CDN -->
-		<script
-			src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"			
-		></script>		
-		<script id="leaderboard-template" type="text/x-handlebars-template">
-			
+		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+		<script id="high-score-template" type="text/x-handlebars-template">
 			<div class="leaderboard">
+				
 				<table class="leaderboard-table">
-					
 					{{#each players}}
-					<tr>
-						<th>
-							{{incremented @index}}
-						</th>
-						<td>
-							{{name}}
-						</td>
-						<td>
-							{{score}}
-						</td>
-					</tr>
+						<tr>
+							<th>
+								{{incremented @index}}
+							</th>
+							<td>
+								{{name}}
+							</td>
+							<td>
+								{{score}}
+							</td>
+						</tr>
 					{{/each}}
-				</table>				
+				</table>
 			</div>
-			
+		</script>
+		<script id="howTo-template" type="text/x-handlebars-template">
+			<div class="howTo">
+				<p>
+					{{howToInfo}}
+				</p>
+			</div>
 		</script>
 	</head>
 	<body>
@@ -48,10 +51,10 @@
 			<br />
 			<nav>
 				<button id="howTo-button" type="button">HOW TO PLAY</button>
+				<button id="high-scores" type="button">HIGH SCORES</button>
 				<button id="noob-mode" type="button" class="green">NOOB MODE</button>
 				<button id="normal-mode" type="button">NORMAL</button>
 				<button id="beast-mode" type="button" class="red">BEAST MODE</button>
-				<button id="myBtn" type="button">HIGH SCORES</button>
 				<br />
 				<button class="green" id="start-button" type="button">START!</button>
 			</nav>
@@ -72,19 +75,16 @@
 
 			<section id="result">
 				<p class="tBoxElement" id="current-result">Let's see how you do...</p>
-				<progress class="tBoxElement" id="time-bar" max="30" value="30"> 30% </progress>
 				<div class="progress-container">
-					<div id="progress-bar">30</div>
+					<div id="progress-bar">You start with 30s</div>
 				</div>
 			</section>
 		</main>
 
-		<div id="myModal" class="modal">
-			<!-- Modal content -->
+		<div id="modal" class="modal">
 			<div class="modal-content">
-				<span class="close">&times;</span>
-				<p>Some text in the Modal..</p>
-				<div id="handlebars-leaderboard-container"></div>
+				<span id="close">&times;</span>				
+				<div id="handlebars-container"></div>
 			</div>
 		</div>
 	</body>

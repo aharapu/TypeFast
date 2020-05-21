@@ -3,23 +3,17 @@ const testSentence = document.getElementById("test-sentence");
 const inputString = document.getElementById("input-string");
 const currentResult = document.getElementById("current-result");
 const currentSentenceElement = document.getElementById("current-sentence");
-const timeBar = document.getElementById("time-bar");
 const progressBar = document.getElementById("progress-bar");
 const startButton = document.getElementById("start-button");
-const howToButton = document.getElementById("howTo-button");
 const noobModeButton = document.getElementById("noob-mode");
 const normalModeButton = document.getElementById("normal-mode");
 const beastModeButton = document.getElementById("beast-mode");
 const greenSentenceH2 = document.getElementById("first-part");
 
-
 const GET_REQ_URL = "http://localhost:8080/getSentencesDB/getSentence";
 const PUT_REQ_URL = "http://localhost:8080/getSentencesDB/add";
-const HOW_TO_INSTR =
-	"You will get one sentence at a time. Simply type the sentence in the box below as fast as humanly possible. Make sure you get the right capitalization and all the symbols in the right place. This is harder than it seems! You start with 30 seconds. Each correct submission gives you extra time. The longer the sentence typed, the more time you gain.";
 
 startButton.addEventListener("click", startGame);
-howToButton.addEventListener("click", howTo);
 noobModeButton.addEventListener("click", setNoobMode);
 normalModeButton.addEventListener("click", setNormalMode);
 beastModeButton.addEventListener("click", setBeastMode);
@@ -30,11 +24,7 @@ let timeOver = false;
 let gameIsRunning = false;
 let score = 0;
 let secondsLeft = 0;
-
-// SHOW HOW TO
-function howTo() {
-	alert(HOW_TO_INSTR);
-}
+let isModeSelected = false;
 
 // CHANGE DIFFICULTY
 function setNoobMode() {
@@ -44,6 +34,7 @@ function setNoobMode() {
 	inputString.setAttribute("type", "string");
 	compareSentencesLive("on");
 	makeGreen();
+	isModeSelected = true;
 }
 function setNormalMode() {
 	noobModeButton.style.opacity = "0.7";
@@ -51,6 +42,7 @@ function setNormalMode() {
 	beastModeButton.style.opacity = "0.7";
 	inputString.setAttribute("type", "string");
 	compareSentencesLive("off");
+	isModeSelected = true;
 }
 function setBeastMode() {
 	noobModeButton.style.opacity = "0.7";
@@ -58,29 +50,33 @@ function setBeastMode() {
 	beastModeButton.style.opacity = "1";
 	inputString.setAttribute("type", "password");
 	compareSentencesLive("off");
+	isModeSelected = true;
 }
 
 // GAME INITIALIZATION
 function startGame() {
+	if (!isModeSelected) {
+		setNormalMode();
+	}
+	inputString.setAttribute("style", "pointer-events: auto");
 	startButton.innerText = "Type as fast as you can!";
 	startButton.style.cursor = "not-allowed";
 	startButton.style.opacity = "0.7";
+	startButton.setAttribute("style", "pointer-events: none");
 	$("#input-string").focus();
 	turnTimerOn();
 	gameIsRunning = true;
-	timeBar.value = "30";
 	secondsLeft = 30;
 	score = 0;
 }
 
 // COUNTDOWN TIMER
 function turnTimerOn() {
-	let x = setInterval(function () {
-		timeBar.value -= 1;
+	let x = setInterval(function () {		
 		secondsLeft--
 		const secondsInPercentage = secondsLeft / 30 * 100;
 		progressBar.style.width = `${secondsInPercentage}%`;
-		progressBar.innerText = secondsLeft;
+		progressBar.innerText = `${secondsLeft}s`;
 		switch (true) {
 			case (secondsLeft < 6) : progressBar.style.backgroundColor = "hsl(0, 90%, 45%)";
 				break;
@@ -88,7 +84,8 @@ function turnTimerOn() {
 				break;
 			default: progressBar.style.backgroundColor = "hsl(108, 94%, 28%)";
 		}
-		if (timeBar.value <= 0) {
+		
+		if (secondsLeft <= 0) {			// GAME OVER condition is met
 			clearInterval(x);
 			currentResult.innerText = "TIME OUT, YOU LOST, LOSER, GO HOME!";
 			alert("game over");

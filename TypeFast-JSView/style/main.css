@@ -3,6 +3,9 @@
 	font-family: GameTime;
 	src: url(../assets/Cabin-Medium.ttf);
 }
+body {
+	margin: 0;
+}
 body * {
 	color: white;
 	font-family: GameTime;
@@ -76,15 +79,18 @@ pre {
 	margin: 30px auto;
 }
 #text-box input {
+	color: black;
 	border: 2px solid rgb(221, 34, 1);
 	border-radius: 5px;
 	width: 400px;
 	max-width: 90%;
 	margin-top: 0;
+	pointer-events: none;
 }
 #text-box input:focus {
 	outline: none;
 }
+
 /* RESULT AND TIME BAR AREA */
 #time-bar {
 	width: 400px;
