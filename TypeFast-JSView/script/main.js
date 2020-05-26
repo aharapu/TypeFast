@@ -9,6 +9,7 @@ const noobModeButton = document.getElementById("noob-mode");
 const normalModeButton = document.getElementById("normal-mode");
 const beastModeButton = document.getElementById("beast-mode");
 const greenSentenceH2 = document.getElementById("first-part");
+const popUpContainer = document.getElementById("popUpContainer");
 
 const GET_REQ_URL = "http://localhost:8080/getSentencesDB/getSentence";
 const PUT_REQ_URL = "http://localhost:8080/getSentencesDB/add";
@@ -118,6 +119,7 @@ inputString.addEventListener("keypress", function (e) {
 		const enteredSentence = String(inputString.value);
 		inputString.value = ""; // clearing the text after keypress
 		if (enteredSentence === currentSentence) {
+			sayGoodJob();
 			timeBar.value += enteredSentence.length / 4;
 			currentResult.innerHTML = "Good job, try another one!";
 			score += enteredSentence.length;
@@ -142,7 +144,7 @@ function compareSentencesLive(onOff) {
 	}
 }
 
-function makeGreen () {  	// WEIRD SHIT GOING ON, NEEDS REFACTORING
+function makeGreen () {  	// WEIRD SHIT GOING ON, NEEDS REFACTORING. use css ::before and ::after
 	const enteredSentence = String(inputString.value);
 	console.log(enteredSentence);
 	let sLength = enteredSentence.length;
@@ -168,6 +170,14 @@ function setNextSentence(responseSentence) {
 	nextSentence = responseSentence;
 }
 
+// Good job Pop-ups
+
+function sayGoodJob() {
+	popUpContainer.style.transform("scale (1)");
+	setTimeout( () => { 
+		popUpContainer.style.transform("scale (0)");
+	}, 200);
+}
 
 
 // SWITCH THE AJAX GET DONE WITH JQUERRY WITH THIS STANDARD BOILERPLATE

@@ -5,6 +5,7 @@
 }
 body {
 	margin: 0;
+	position: relative;
 }
 body * {
 	color: white;
@@ -122,6 +123,25 @@ tr {
 th, td {
 	border: solid white 2px;
 	display: table-cell;
+}
+
+/* POP-UP */
+#popUpContainer {
+	background-color: black;
+	color: white;
+	transform: scale(0);
+	transition: ease-out 200ms;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+
+.showPopUp {
+	transform: scale(1);
+}
+
+.hidePopUp {
+	transform: scale(0);
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
 
