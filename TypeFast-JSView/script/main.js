@@ -173,10 +173,12 @@ function setNextSentence(responseSentence) {
 // Good job Pop-ups
 
 function sayGoodJob() {
-	popUpContainer.style.transform("scale (1)");
-	setTimeout( () => { 
-		popUpContainer.style.transform("scale (0)");
-	}, 200);
+	
+		popUpContainer.classList.toggle("showPopUp");
+		setTimeout(() => {
+		  popUpContainer.classList.toggle("showPopUp");
+		}, 300);
+	  
 }
 
 

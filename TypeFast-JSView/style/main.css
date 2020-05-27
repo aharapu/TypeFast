@@ -126,23 +126,24 @@ th, td {
 }
 
 /* POP-UP */
-#popUpContainer {
+.popUpContainer {
 	background-color: black;
-	color: white;
-	transform: scale(0);
-	transition: ease-out 200ms;
+	color: white;	
+	width:100px;
+	height: 100px;
+
 	position: absolute;
 	top: 50%;
 	left: 50%;
-}
 
+	transform: translateY(-50%) translateX(-50%) scale(0);
+}
 .showPopUp {
-	transform: scale(1);
+	transform: translateY(-50%) translateX(-50%) scale(1) !important;
+	transition: ease-out 200ms;
 }
 
-.hidePopUp {
-	transform: scale(0);
-}
+
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
 
   }
