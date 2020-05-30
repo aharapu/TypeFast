@@ -16,7 +16,6 @@
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 		<script id="high-score-template" type="text/x-handlebars-template">
 			<div class="leaderboard">
-				
 				<table class="leaderboard-table">
 					{{#each players}}
 						<tr>
@@ -44,17 +43,19 @@
 	</head>
 	<body>
 		<header>
-			<p>
-				Make a choice and make sure it's a good one!
-			</p>
-
-			<br />
 			<nav>
 				<button id="howTo-button" type="button">HOW TO PLAY</button>
 				<button id="high-scores" type="button">HIGH SCORES</button>
+			</nav>
+			<br />
+			<p>
+				Make a choice and make sure it's a good one!
+			</p>
+			<nav>
 				<button id="noob-mode" type="button" class="green modeButton">NOOB MODE</button>
 				<button id="normal-mode" type="button" class="modeButton">NORMAL</button>
 				<button id="beast-mode" type="button" class="red modeButton">BEAST MODE</button>
+				<br />
 				<br />
 				<button class="green" id="start-button" type="button">START!</button>
 			</nav>
@@ -62,14 +63,16 @@
 		<main>
 			<section id="text-box">
 				<div class="tBoxElement">
-					<pre id="first-part"></pre>
-					<pre id="current-sentence">Type this first.</pre>
+					<p id="example-sentence">
+						<span id="first-part"></span>
+						<span id="current-sentence">Type this first.</span>
+					</p>
 				</div>
 				<input
 					class="tBoxElement"
 					id="input-string"
 					type="string"
-					placeholder="Type here..."
+					placeholder="type here"
 				/>
 			</section>
 
@@ -83,7 +86,7 @@
 
 		<div id="modal" class="modal">
 			<div class="modal-content">
-				<span id="close">&times;</span>				
+				<span id="close">&times;</span>
 				<div id="handlebars-container"></div>
 			</div>
 		</div>
