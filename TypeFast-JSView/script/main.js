@@ -15,9 +15,9 @@ const GET_REQ_URL = "http://localhost:8080/getSentencesDB/getSentence";
 const PUT_REQ_URL = "http://localhost:8080/getSentencesDB/add";
 
 startButton.addEventListener("click", startGame);
-noobModeButton.addEventListener("click", setNoobMode);
-normalModeButton.addEventListener("click", setNormalMode);
-beastModeButton.addEventListener("click", setBeastMode);
+noobModeButton.addEventListener("click", ()=> {setMode("noob")});
+normalModeButton.addEventListener("click", ()=> {setMode("normal")});
+beastModeButton.addEventListener("click", ()=> {setMode("beast")});
 
 let currentSentence = String(currentSentenceElement.innerText);
 let nextSentence = "The second sentence is always the same."; // fix this when api is done
@@ -28,30 +28,12 @@ let secondsLeft = 0;
 let isModeSelected = false;
 
 // CHANGE DIFFICULTY
-function setNoobMode() {
-	noobModeButton.style.opacity = "1";
-	normalModeButton.style.opacity = "0.7";
-	beastModeButton.style.opacity = "0.7";
-	inputString.setAttribute("type", "string");
-	compareSentencesLive("on");
-	makeGreen();
+function setMode(modeSlection) {
+	document.querySelectorAll(".modeButton").forEach(nodeElement => nodeElement.style.opacity="0.7");
+	document.querySelector(`#${modeSlection}-mode`).style.opacity="1";
 	isModeSelected = true;
-}
-function setNormalMode() {
-	noobModeButton.style.opacity = "0.7";
-	normalModeButton.style.opacity = "1";
-	beastModeButton.style.opacity = "0.7";
-	inputString.setAttribute("type", "string");
-	compareSentencesLive("off");
-	isModeSelected = true;
-}
-function setBeastMode() {
-	noobModeButton.style.opacity = "0.7";
-	normalModeButton.style.opacity = "0.7";
-	beastModeButton.style.opacity = "1";
-	inputString.setAttribute("type", "password");
-	compareSentencesLive("off");
-	isModeSelected = true;
+	inputString.setAttribute("type", modeSlection!=="beast"?"string":"password");
+	compareSentencesLive(modeSlection!=="noob"?"off":"on");
 }
 
 // GAME INITIALIZATION
@@ -120,7 +102,7 @@ inputString.addEventListener("keypress", function (e) {
 		inputString.value = ""; // clearing the text after keypress
 		if (enteredSentence === currentSentence) {
 			sayGoodJob();
-			timeBar.value += enteredSentence.length / 4;
+			secondsLeft += Math.floor(enteredSentence.length / 4);
 			currentResult.innerHTML = "Good job, try another one!";
 			score += enteredSentence.length;
 		} else {
@@ -137,6 +119,7 @@ inputString.addEventListener("keypress", function (e) {
 function compareSentencesLive(onOff) {
 	if (onOff === "on") {
 		inputString.addEventListener("keyup", makeGreen);
+		makeGreen();
 	} else {
 		inputString.removeEventListener("keyup", makeGreen);
 		greenSentenceH2.innerText = "";
