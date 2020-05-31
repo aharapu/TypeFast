@@ -55,13 +55,32 @@ const highScoreData = {
 			place: 7,
 			name: "BIGDINK",
 			score: 2345,
+		},{
+			score_id: 8,
+			place: 8,
+			name: "BIGDINK",
+			score: 2345,
+		},{
+			score_id: 9,
+			place: 9,
+			name: "BIGDINK",
+			score: 2345,
+		},{
+			score_id: 10,
+			place: 10,
+			name: "BIGDINK",
+			score: 2345,
 		},
 	],
 };
 const howToData = {
-	howToInfo:
-		"You will get one sentence at a time. Simply type the sentence in the box below as fast as humanly possible. Make sure you get the right capitalization and all the symbols in the right place. This is harder than it seems! You start with 30 seconds. Each correct submission gives you extra time. The longer the sentence typed, the more time you gain.",
-};
+	howTo1:
+		"You will get one sentence at a time. Simply type the sentence in the box below as fast as humanly possible.",
+	howTo2:
+		"Make sure you get the right capitalization and all the symbols in the right place. This is harder than it seems!",
+	howTo3:
+		"You start with 30 seconds. Each correct submission gives you extra time. The longer the sentence typed, the more time you gain."
+	};
 
 highScoresBtn.addEventListener("click", () => {
 	generateModal(highScoreTemplate, highScoreData);

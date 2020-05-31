@@ -29,7 +29,7 @@ let isModeSelected = false;
 
 // CHANGE DIFFICULTY
 function setMode(modeSlection) {
-	document.querySelectorAll(".modeButton").forEach(nodeElement => nodeElement.style.opacity="0.7");
+	document.querySelectorAll(".modeButton").forEach(nodeElement => nodeElement.style.opacity="0.5");
 	document.querySelector(`#${modeSlection}-mode`).style.opacity="1";
 	isModeSelected = true;
 	inputString.setAttribute("type", modeSlection!=="beast"?"string":"password");
@@ -39,13 +39,13 @@ function setMode(modeSlection) {
 // GAME INITIALIZATION
 function startGame() {
 	if (!isModeSelected) {
-		setNormalMode();
+		setMode("normal");
 	}
 	inputString.setAttribute("style", "pointer-events: auto");
 	startButton.innerText = "Type as fast as you can!";
 	startButton.style.cursor = "not-allowed";
-	startButton.style.opacity = "0.7";
 	startButton.setAttribute("style", "pointer-events: none");
+	startButton.style.opacity = "0.5";
 	$("#input-string").focus();
 	turnTimerOn();
 	gameIsRunning = true;
@@ -61,16 +61,16 @@ function turnTimerOn() {
 		progressBar.style.width = `${secondsInPercentage}%`;
 		progressBar.innerText = `${secondsLeft}s`;
 		switch (true) {
-			case (secondsLeft < 6) : progressBar.style.backgroundColor = "hsl(0, 90%, 45%)";
+			case (secondsLeft < 6) : progressBar.style.backgroundColor = "rgb(49, 34, 0)";
 				break;
-			case (secondsLeft < 11) : progressBar.style.backgroundColor = "hsl(21, 94%, 50%)";
+			case (secondsLeft < 11) : progressBar.style.backgroundColor = "rgb(112, 84, 20)";
 				break;
-			default: progressBar.style.backgroundColor = "hsl(108, 94%, 28%)";
+			default: progressBar.style.backgroundColor = "rgb(179, 125, 73)";
 		}
 		
 		if (secondsLeft <= 0) {			// GAME OVER condition is met
 			clearInterval(x);
-			currentResult.innerText = "TIME OUT, YOU LOST, LOSER, GO HOME!";
+			currentResult.innerText = "You ran out of time. Hit \"Try again!\" for a new game.";
 			alert("game over");
 
 			// add new sentence into DB via API call
@@ -88,7 +88,7 @@ function turnTimerOn() {
 				},
 			});
 			gameIsRunning = false;
-			startButton.innerHTML = "TRY AGAIN!";
+			startButton.innerHTML = "Try again!";
 			startButton.style.cursor = "";
 			startButton.style.opacity = "1";
 		}
