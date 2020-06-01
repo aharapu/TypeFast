@@ -15,9 +15,15 @@ const GET_REQ_URL = "http://localhost:8080/getSentencesDB/getSentence";
 const PUT_REQ_URL = "http://localhost:8080/getSentencesDB/add";
 
 startButton.addEventListener("click", startGame);
-noobModeButton.addEventListener("click", ()=> {setMode("noob")});
-normalModeButton.addEventListener("click", ()=> {setMode("normal")});
-beastModeButton.addEventListener("click", ()=> {setMode("beast")});
+noobModeButton.addEventListener("click", () => {
+	setMode("noob");
+});
+normalModeButton.addEventListener("click", () => {
+	setMode("normal");
+});
+beastModeButton.addEventListener("click", () => {
+	setMode("beast");
+});
 
 let currentSentence = String(currentSentenceElement.innerText);
 let nextSentence = "The second sentence is always the same."; // fix this when api is done
@@ -26,14 +32,18 @@ let gameIsRunning = false;
 let score = 0;
 let secondsLeft = 0;
 let isModeSelected = false;
+let computedStyle = window.getComputedStyle(progressBar);
+let initialWidth = parseFloat(computedStyle.getPropertyValue("width")); // get initial width reference
 
 // CHANGE DIFFICULTY
 function setMode(modeSlection) {
-	document.querySelectorAll(".modeButton").forEach(nodeElement => nodeElement.style.opacity="0.5");
-	document.querySelector(`#${modeSlection}-mode`).style.opacity="1";
+	document
+		.querySelectorAll(".modeButton")
+		.forEach((nodeElement) => (nodeElement.style.opacity = "0.5"));
+	document.querySelector(`#${modeSlection}-mode`).style.opacity = "1";
 	isModeSelected = true;
-	inputString.setAttribute("type", modeSlection!=="beast"?"string":"password");
-	compareSentencesLive(modeSlection!=="noob"?"off":"on");
+	inputString.setAttribute("type", modeSlection !== "beast" ? "string" : "password");
+	compareSentencesLive(modeSlection !== "noob" ? "off" : "on");
 }
 
 // GAME INITIALIZATION
@@ -47,50 +57,38 @@ function startGame() {
 	startButton.setAttribute("style", "pointer-events: none");
 	startButton.style.opacity = "0.5";
 	$("#input-string").focus();
-	turnTimerOn();
 	gameIsRunning = true;
-	secondsLeft = 30;
 	score = 0;
-}
 
-// COUNTDOWN TIMER
-function turnTimerOn() {
-	let x = setInterval(function () {		
-		secondsLeft--
-		const secondsInPercentage = secondsLeft / 30 * 100;
-		progressBar.style.width = `${secondsInPercentage}%`;
+	// activate progress bar
+	progressBar.setAttribute("style", "width:0px !important; transition: width 30s linear;");
+	progressBar.innerText = "30s";
+
+	//check for loss condition and display time left.
+	let checkEndGameInterval = setInterval(() => {
+		let computedStyle = window.getComputedStyle(progressBar);
+		let currentWidth = parseFloat(computedStyle.getPropertyValue("width"));
+		let secondsLeft = Math.floor((currentWidth * 30) / initialWidth);
 		progressBar.innerText = `${secondsLeft}s`;
-		switch (true) {
-			case (secondsLeft < 6) : progressBar.style.backgroundColor = "rgb(49, 34, 0)";
-				break;
-			case (secondsLeft < 11) : progressBar.style.backgroundColor = "rgb(112, 84, 20)";
-				break;
-			default: progressBar.style.backgroundColor = "rgb(179, 125, 73)";
-		}
-		
-		if (secondsLeft <= 0) {			// GAME OVER condition is met
-			clearInterval(x);
-			currentResult.innerText = "You ran out of time. Hit \"Try again!\" for a new game.";
-			alert("game over");
 
-			// add new sentence into DB via API call
-			const dataAddedSentence = prompt(
-				"Please enter a new sentence to practice in the future:",
-				"New Sentence"
-			);
-			$.ajax({
-				url: PUT_REQ_URL,
-				method: "POST", // method is any HTTP method
-				contentType: "text/plain",
-				data: dataAddedSentence,
-				success: function () {
-					alert("new sentence added");
-				},
-			});
-			gameIsRunning = false;
-			startButton.innerHTML = "Try again!";
-			startButton.style.cursor = "";
-			startButton.style.opacity = "1";
+		switch (true) {
+			case secondsLeft < 0.1:
+				progressBar.setAttribute("style", "width:3px !important;");
+				clearInterval(checkEndGameInterval);
+				alert("game over"); //TO DO - add end game logic to display modal with score and type name if new high score
+				gameIsRunning = false;
+				startButton.innerHTML = "Try again!";
+				startButton.style.cursor = "";
+				startButton.style.opacity = "1";
+				break;
+			case secondsLeft < 10:
+				progressBar.style.backgroundColor = "rgb(49, 34, 0)";
+				break;
+			case secondsLeft < 20:
+				progressBar.style.backgroundColor = "rgb(112, 84, 20)";
+				break;
+			default:
+				progressBar.style.backgroundColor = "rgb(179, 125, 73)";
 		}
 	}, 1000);
 }
@@ -102,7 +100,26 @@ inputString.addEventListener("keypress", function (e) {
 		inputString.value = ""; // clearing the text after keypress
 		if (enteredSentence === currentSentence) {
 			sayGoodJob();
-			secondsLeft += Math.floor(enteredSentence.length / 4);
+			// adjust progress bar
+			let timeToAdd = enteredSentence.length / 4;
+			let timeInPixels = (initialWidth * timeToAdd) / 30;
+
+			let computedStyle = window.getComputedStyle(progressBar);
+			let width = parseFloat(computedStyle.getPropertyValue("width"));
+			let newWidth = timeInPixels + width;
+			progressBar.setAttribute("style", "width: " + newWidth + "px");
+
+			// timeout is a rendering workaround to trigger the transition correctly
+			setTimeout(() => {
+				let newWidthInSeconds = (30 * newWidth) / initialWidth;
+				console.log("new time", newWidthInSeconds, "new width", newWidth);
+				console.log("computed width", width);
+				progressBar.setAttribute(
+					"style",
+					"width:0px !important; transition: width " + newWidthInSeconds + "s linear;",
+				);
+			}, 50);
+
 			currentResult.innerHTML = "Good job, try another one!";
 			score += enteredSentence.length;
 		} else {
@@ -127,23 +144,25 @@ function compareSentencesLive(onOff) {
 	}
 }
 
-function makeGreen () {  	// WEIRD SHIT GOING ON, NEEDS REFACTORING. use css ::before and ::after
+function makeGreen() {
+	// WEIRD SHIT GOING ON, NEEDS REFACTORING. use css ::before and ::after
 	const enteredSentence = String(inputString.value);
 	console.log(enteredSentence);
 	let sLength = enteredSentence.length;
-	if (sLength <= currentSentence.length && enteredSentence == currentSentence.substring(0,sLength)) {
+	if (
+		sLength <= currentSentence.length &&
+		enteredSentence == currentSentence.substring(0, sLength)
+	) {
 		greenSentenceH2.innerText = enteredSentence;
 		currentSentenceElement.innerText = currentSentence.substring(sLength);
 	}
-	
 }
 
 // API call function to get a new sentence and place it into nextSentence
 function httpGetAsync(url, callback) {
 	let xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = function () {
-		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-			callback(xmlHttp.responseText);
+		if (xmlHttp.readyState == 4 && xmlHttp.status == 200) callback(xmlHttp.responseText);
 	};
 	xmlHttp.open("GET", url, true); // true for asynchronous
 	xmlHttp.send(null);
@@ -156,14 +175,11 @@ function setNextSentence(responseSentence) {
 // Good job Pop-ups
 
 function sayGoodJob() {
-	
+	popUpContainer.classList.toggle("showPopUp");
+	setTimeout(() => {
 		popUpContainer.classList.toggle("showPopUp");
-		setTimeout(() => {
-		  popUpContainer.classList.toggle("showPopUp");
-		}, 300);
-	  
+	}, 300);
 }
-
 
 // SWITCH THE AJAX GET DONE WITH JQUERRY WITH THIS STANDARD BOILERPLATE
 // const xhr = new XMLHttpRequest();
@@ -208,7 +224,7 @@ function sayGoodJob() {
 // const shortenUrl = async () =>{
 // 	const urlToShorten = inputField.value;
 // 	const data = JSON.stringify({destination: urlToShorten});
-  
+
 // 	try{
 // 	  const response =  await fetch(rebrandlyEndpoint, {
 // 		method: 'POST',
