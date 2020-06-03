@@ -1,0 +1,14 @@
+{
+  "name": "typefast-expressjsapi",
+  "version": "1.0.0",
+  "description": "first try at a restful api using expressjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Valentin Harapu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

@@ -1,16 +1,18 @@
 // CONNECTIONS TO HTML ELEMENTS
+// buttons
+const startButton = document.getElementById("start-button");
+const noobModeButton = document.getElementById("noob-mode");
+const normalModeButton = document.getElementById("normal-mode");
+const beastModeButton = document.getElementById("beast-mode");
+
+//game logic
+const greenSentenceH2 = document.getElementById("first-part");
+const popUpContainer = document.getElementById("popUpContainer");
 const testSentence = document.getElementById("test-sentence");
 const inputString = document.getElementById("input-string");
 const currentResult = document.getElementById("current-result");
 const currentSentenceElement = document.getElementById("current-sentence");
 const progressBar = document.getElementById("progress-bar");
-const startButton = document.getElementById("start-button");
-const noobModeButton = document.getElementById("noob-mode");
-const normalModeButton = document.getElementById("normal-mode");
-const beastModeButton = document.getElementById("beast-mode");
-const greenSentenceH2 = document.getElementById("first-part");
-const popUpContainer = document.getElementById("popUpContainer");
-
 const GET_REQ_URL = "http://localhost:8080/getSentencesDB/getSentence";
 const PUT_REQ_URL = "http://localhost:8080/getSentencesDB/add";
 
@@ -65,10 +67,10 @@ function startGame() {
 	progressBar.innerText = "30s";
 
 	//check for loss condition and display time left.
-	let checkEndGameInterval = setInterval(() => {
-		let computedStyle = window.getComputedStyle(progressBar);
-		let currentWidth = parseFloat(computedStyle.getPropertyValue("width"));
-		let secondsLeft = Math.floor((currentWidth * 30) / initialWidth);
+	const checkEndGameInterval = setInterval(() => {
+		const computedStyle = window.getComputedStyle(progressBar);
+		const currentWidth = parseFloat(computedStyle.getPropertyValue("width"));
+		const secondsLeft = Math.floor((currentWidth * 30) / initialWidth);
 		progressBar.innerText = `${secondsLeft}s`;
 
 		switch (true) {
@@ -112,8 +114,6 @@ inputString.addEventListener("keypress", function (e) {
 			// timeout is a rendering workaround to trigger the transition correctly
 			setTimeout(() => {
 				let newWidthInSeconds = (30 * newWidth) / initialWidth;
-				console.log("new time", newWidthInSeconds, "new width", newWidth);
-				console.log("computed width", width);
 				progressBar.setAttribute(
 					"style",
 					"width:0px !important; transition: width " + newWidthInSeconds + "s linear;",

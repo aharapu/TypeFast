@@ -1,0 +1,54 @@
+{
+	"players": [
+		{
+			"place": 1,
+			"name": "Vasilescu Vasile",
+			"score": 50
+		},
+		{
+			"place": 2,
+			"name": "Mihalache Vasile",
+			"score": 45
+		},
+		{
+			"place": 3,
+			"name": "Vasilescu Grosu",
+			"score": 45
+		},
+		{
+			"place": 4,
+			"name": "John John",
+			"score": 45
+		},
+		{
+			"place": 5,
+			"name": "Terminator",
+			"score": 45
+		},
+		{
+			"place": 6,
+			"name": "R3al Name Vasile",
+			"score": 88
+		},
+		{
+			"place": 7,
+			"name": "BIGDINK",
+			"score": 88
+		},
+		{
+			"place": 8,
+			"name": "BIGDINK",
+			"score": 88
+		},
+		{
+			"place": 9,
+			"name": "BIGDINK",
+			"score": 88
+		},
+		{
+			"place": 10,
+			"name": "BIGDINK",
+			"score": 88
+		}
+	]
+}

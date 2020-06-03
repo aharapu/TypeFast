@@ -12,67 +12,8 @@ Handlebars.registerHelper("incremented", function (index) {
 	return index;
 });
 
-const highScoreData = {
-	players: [
-		{
-			score_id: 1,
-			place: 1,
-			name: "Vasilescu Vasile",
-			score: 2345,
-		},
-		{
-			score_id: 2,
-			place: 2,
-			name: "Mihalache Vasile",
-			score: 2345,
-		},
-		{
-			score_id: 3,
-			place: 3,
-			name: "Vasilescu Grosu",
-			score: 2345,
-		},
-		{
-			score_id: 4,
-			place: 4,
-			name: "John John",
-			score: 2345,
-		},
-		{
-			score_id: 5,
-			place: 5,
-			name: "Terminator",
-			score: 2345,
-		},
-		{
-			score_id: 6,
-			place: 6,
-			name: "R3al Name Vasile",
-			score: 2345,
-		},
-		{
-			score_id: 7,
-			place: 7,
-			name: "BIGDINK",
-			score: 2345,
-		},{
-			score_id: 8,
-			place: 8,
-			name: "BIGDINK",
-			score: 2345,
-		},{
-			score_id: 9,
-			place: 9,
-			name: "BIGDINK",
-			score: 2345,
-		},{
-			score_id: 10,
-			place: 10,
-			name: "BIGDINK",
-			score: 2345,
-		},
-	],
-};
+getHighScoreData();
+
 const howToData = {
 	howTo1:
 		"You will get one sentence at a time. Simply type the sentence in the box below as fast as humanly possible.",
@@ -106,3 +47,4 @@ const closeBtn = document.getElementById("close");
 closeBtn.onclick = function () {
 	modal.style.display = "none";
 };
+
