@@ -40,6 +40,11 @@ let nextSentence;
 getSentencesData();
 // assign intial sentence
 let currentSentence = String(currentSentenceElement.innerText);
+//set score to beat
+let highScoreData;
+let scoreToBeat;
+getHighScoreData();
+
 
 // CHANGE DIFFICULTY
 function setMode(modeSlection) {
@@ -112,6 +117,8 @@ inputString.addEventListener("keypress", function (e) {
 			let width = parseFloat(computedStyle.getPropertyValue("width"));
 			let newWidth = timeInPixels + width;
 			progressBar.setAttribute("style", "width: " + newWidth + "px");
+			// increase score
+			score += enteredSentence.length;
 
 			// timeout is a rendering workaround to trigger the transition correctly
 			setTimeout(() => {
@@ -123,7 +130,6 @@ inputString.addEventListener("keypress", function (e) {
 			}, 50);
 
 			currentResult.innerHTML = "Good job, try another one!";
-			score += enteredSentence.length;
 		} else {
 			currentResult.innerHTML = "You wasted time, try another sentence!";
 		}

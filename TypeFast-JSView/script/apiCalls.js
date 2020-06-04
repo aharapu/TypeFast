@@ -10,15 +10,18 @@ function getHighScoreData() {
 			});
 			console.log(response);
 			if (response.ok) {
-				highScoreData = await response.json();
-				console.log("array in highscore response.ok", highScoreData);
+				return await response.json();
 			}
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	callGet();
+	callGet().then((jsonResponse) => {
+		highScoreData = jsonResponse;
+		console.log(highScoreData);
+		scoreToBeat = jsonResponse.players[9].score;
+	});
 }
 
 function getSentencesData() {
@@ -48,7 +51,7 @@ function getSentencesData() {
 }
 
 function postNewSentence(sentence = "a default sentence if none is passed") {
-	sentenceAsData = JSON.stringify({ "sentence": sentence });
+	sentenceAsData = JSON.stringify({ sentence: sentence });
 	const callPost = async () => {
 		try {
 			const response = await fetch("http://localhost:4001/sentences", {
@@ -69,4 +72,27 @@ function postNewSentence(sentence = "a default sentence if none is passed") {
 	};
 
 	callPost();
+}
+
+function sendNewHighScore(name, score) {
+	newScoreAsData = JSON.stringify( { name: name, score: score });
+	const callPut = async () => {
+		try {
+			const response = await fetch("http://localhost:4001/highScores/newHighScore", {
+				method: "PUT",
+				headers: {
+					"Content-type": "application/json",
+				},
+				body: newScoreAsData
+			});
+			console.log(response);
+			if (response.ok) {
+				console.log("put new score call response status:", response.status);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	callPut();
 }

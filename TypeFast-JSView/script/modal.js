@@ -1,11 +1,13 @@
 // Get the modal
 const modal = document.getElementById("modal");
 const submitSentenceModal = document.getElementById("submitSentenceModal");
+const writeNameModal = document.getElementById("writeNameModal");
 // Get the buttons that opens the modal
 const highScoresBtn = document.getElementById("high-scores");
 const howToButton = document.getElementById("howTo-button");
-// Get imput to submit sentence
+// Get imput to submit sentence and submit name
 const sentenceInputField = document.getElementById("newSentence");
+const nameInputField = document.getElementById("newName");
 // Get handnebarsjs templates
 const highScoreTemplate = document.getElementById("high-score-template").innerHTML;
 const howToTemplate = document.getElementById("howTo-template").innerHTML;
@@ -14,8 +16,6 @@ Handlebars.registerHelper("incremented", function (index) {
 	index++;
 	return index;
 });
-
-getHighScoreData();
 
 const howToData = {
 	howTo1:
@@ -39,6 +39,17 @@ sentenceInputField.addEventListener("keypress", function (e) {
 		console.log("submitting sentence:", sentenceToAdd);
 		postNewSentence(sentenceToAdd);
 		submitSentenceModal.style.display = "none";
+		checkForHighScore();
+	}
+});
+
+nameInputField.addEventListener("keypress", function (e) {
+	if (e.key === "Enter") {
+		const nameToAdd = e.target.value;
+		console.log("submitting name:", nameToAdd);
+		sendNewHighScore(nameToAdd, score);
+		writeNameModal.style.display = "none";	
+		getHighScoreData();	
 	}
 });
 
@@ -59,3 +70,8 @@ const closeBtn = document.getElementById("close");
 closeBtn.onclick = function () {
 	modal.style.display = "none";
 };
+
+function checkForHighScore() {
+	if (score < scoreToBeat) return;
+	writeNameModal.style.display = "block";
+}

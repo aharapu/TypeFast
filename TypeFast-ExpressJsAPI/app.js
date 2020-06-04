@@ -17,8 +17,23 @@ app.use("/sentences", sentenceRouter);
 
 // request handling with a router
 highScoreRouter.get("/", (req, res, next) => {
-	const highScore = require("./highScores.json");
-	res.status(200).json(highScore);
+	const highScores = require("./highScores.json");
+	res.status(200).json(highScores);
+});
+
+highScoreRouter.put("/newHighScore", bodyParser.json(), (req, res, next) => {
+	const newScore = req.body;
+	const highScores = require("./highScores.json");
+	highScores.players.push(newScore);
+	highScores.players.sort( (playerA, playerB) => {
+		if ( playerA.score > playerB.score ) return -1;
+		if ( playerA.score < playerB.score ) return 1;
+		return 0;
+	})
+	highScores.players.pop();
+	const highScoresAsData = JSON.stringify(highScores);
+	fs.writeFileSync('./highScores.json', highScoresAsData);
+	res.status(201).send(newScore);
 });
 
 sentenceRouter.get("/", (req, res, next) => {
@@ -36,72 +51,38 @@ sentenceRouter.post("/", bodyParser.json(), (req, res, next) => {
 	res.status(201).send(newSentence);
 });
 
-app.post("/expressions", (req, res, next) => {
-	const receivedExpression = createElement("expressions", req.query);
-	if (receivedExpression) {
-		expressions.push(receivedExpression);
-		res.status(201).send(receivedExpression);
-	} else {
-		res.status(400).send();
-	}
+sentenceRouter.get("/validationList", (req, res, next) => {
+	const sentences = require("./pendingSentences.json");
+	res.status(200).json(sentences);
 });
+
+sentenceRouter.put("/validationList/add", (req, res, next) => {
+	const pendingSentences = require("./pendingSentences.json");
+	sentenceToAdd = pendingSentences.array[pendingSentences.array.length - 1];
+	console.log("adding from validation to sentenc:", sentenceToAdd);
+	const sentences = require("./sentences.json");
+	sentences.array.push(sentenceToAdd);
+	const sentencessAsData = JSON.stringify(sentences);
+	fs.writeFileSync('./sentences.json', sentencessAsData);
+	popLastSentence();
+	res.status(201).send(sentenceToAdd);
+});
+
+sentenceRouter.delete('/validationList/delete', (req, res, next) => {
+	popLastSentence();
+	res.status(204).send();
+  });
 
 const PORT = 4001;
-
-
-
-
-
-// Use static server to serve the Express Yourself Website
-// app.use(express.static("public"));
-
-/* app.get("/expressions", (req, res, next) => {
-	res.send(expressions);
-});
-
-app.get("/animals", (req, res, next) => {
-	res.send(animals);
-});
-
-app.get("/expressions/:id", (req, res, next) => {
-	const foundExpression = getElementById(req.params.id, expressions);
-	if (foundExpression) {
-		res.send(foundExpression);
-	} else {
-		res.status(404).send();
-	}
-});
-
-app.put("/expressions/:id", (req, res, next) => {
-	const expressionIndex = getIndexById(req.params.id, expressions);
-	if (expressionIndex !== -1) {
-		updateElement(req.params.id, req.query, expressions);
-		res.send(expressions[expressionIndex]);
-	} else {
-		res.status(404).send();
-	}
-});
-
-app.post("/expressions", (req, res, next) => {
-	const receivedExpression = createElement("expressions", req.query);
-	if (receivedExpression) {
-		expressions.push(receivedExpression);
-		res.status(201).send(receivedExpression);
-	} else {
-		res.status(400).send();
-	}
-});
-
-app.delete("/expressions/:id", (req, res, next) => {
-	const expressionIndex = getIndexById(req.params.id, expressions);
-	if (expressionIndex !== -1) {
-		expressions.splice(expressionIndex, 1);
-		res.status(204).send();
-	} else {
-		res.status(404).send();
-	}
-}); */
 
 app.listen(PORT, () => {
 	console.log(`Listening on port ${PORT}`);
 });
+
+function popLastSentence() {
+	const pendingSentences = require("./pendingSentences.json");
+	console.log(" deleting last sentence in list ");
+	pendingSentences.array.pop();
+	pendingSentencesAsData = JSON.stringify(pendingSentences);
+	fs.writeFileSync('./pendingSentences.json', pendingSentencesAsData);
+}
