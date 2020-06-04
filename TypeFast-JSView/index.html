@@ -9,9 +9,9 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="style/modal.css" />
 		<script src="script/jquery-3.5.0.js" defer></script>
 		<script src="script/apiCalls.js" defer></script>
-		<script src="script/modal.js"  defer></script>
+		<script src="script/modal.js" defer></script>
 		<script src="script/main.js" defer></script>
-		
+
 		<!-- Include Handlebars from a CDN -->
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 		<script id="high-score-template" type="text/x-handlebars-template">
@@ -36,14 +36,15 @@
 		<script id="howTo-template" type="text/x-handlebars-template">
 			<div class="howTo">
 				<p>
-					{{howTo1}}<br><br>{{howTo2}}<br><br>{{howTo3}}
+					{{howTo1}}<br />
+					<br />{{howTo2}}<br />
+					<br />{{howTo3}}
 				</p>
 			</div>
 		</script>
 	</head>
 	<body>
-		<div id="background-image">
-		</div>
+		<div id="background-image"></div>
 		<header>
 			<nav>
 				<button id="howTo-button" type="button">How to play.</button>
@@ -95,6 +96,18 @@
 
 		<div id="popUpContainer" class="popUpContainer">
 			<h1>BINE BA, AI FACUT TREABA!</h1>
+		</div>
+
+		<div id="submitSentenceModal" class="submitSentence modal">
+			<div id="noFlex" class="modal-content">
+				<p>
+					Thank you for playing. Add a sentence, and if the boss likes it, he will add it
+					to the rest of them for you to play with. Please don't use any dirty words :P
+					Oh, and keep it under 30 characters, please.
+				</p>
+				<br />
+				<input id="newSentence" type="text" maxlength="30" />
+			</div>
 		</div>
 	</body>
 </html>

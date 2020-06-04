@@ -1,48 +1,72 @@
 // call API functions
 function getHighScoreData() {
-	
 	const callGet = async () => {
 		try {
-			const response =  await fetch("http://localhost:4001/highScore", {
-					method: 'GET',
-					headers: {
-						"Content-type": "application/json",
-					}
-				});
+			const response = await fetch("http://localhost:4001/highScores", {
+				method: "GET",
+				headers: {
+					"Content-type": "application/json",
+				},
+			});
 			console.log(response);
-			if(response.ok){
+			if (response.ok) {
 				highScoreData = await response.json();
-				console.log("array in response.ok", highScoreData);					
+				console.log("array in highscore response.ok", highScoreData);
 			}
+		} catch (error) {
+			console.log(error);
 		}
-		catch(error){
-			  console.log(error);
-		}
-	}
+	};
 
 	callGet();
 }
 
 function getSentencesData() {
-	
 	const callGet = async () => {
 		try {
-			const response =  await fetch("http://localhost:4001/highScore", {
-					method: 'GET',
-					headers: {
-						"Content-type": "application/json",
-					}
-				});
+			const response = await fetch("http://localhost:4001/sentences", {
+				method: "GET",
+				headers: {
+					"Content-type": "application/json",
+				},
+			});
 			console.log(response);
-			if(response.ok){
-				highScoreData = await response.json();
-				console.log("array in response.ok", highScoreData);					
+			if (response.ok) {
+				sentenceData = await response.json();
+				console.log("array in sentences response.ok", sentenceData);
+
+				const randomIndex = Math.floor(Math.random() * sentenceData.array.length);
+				console.log("extracting sentence at index " + randomIndex);
+				nextSentence = sentenceData.array[randomIndex].sentence;
 			}
+		} catch (error) {
+			console.log(error);
 		}
-		catch(error){
-			  console.log(error);
-		}
-	}
+	};
 
 	callGet();
+}
+
+function postNewSentence(sentence = "a default sentence if none is passed") {
+	sentenceAsData = JSON.stringify({ "sentence": sentence });
+	const callPost = async () => {
+		try {
+			const response = await fetch("http://localhost:4001/sentences", {
+				method: "POST",
+				headers: {
+					"Content-type": "application/json",
+				},
+				body: sentenceAsData,
+			});
+			console.log(response);
+			if (response.ok) {
+				jsonResponse = await response.json();
+				console.log("webapi response to posting sentence:", jsonResponse);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	callPost();
 }

@@ -27,15 +27,19 @@ beastModeButton.addEventListener("click", () => {
 	setMode("beast");
 });
 
-let currentSentence = String(currentSentenceElement.innerText);
-let nextSentence = "The second sentence is always the same."; // fix this when api is done
 let timeOver = false;
 let gameIsRunning = false;
 let score = 0;
-let secondsLeft = 0;
+let secondsLeft = 30;
 let isModeSelected = false;
 let computedStyle = window.getComputedStyle(progressBar);
 let initialWidth = parseFloat(computedStyle.getPropertyValue("width")); // get initial width reference
+// fetch sentences array
+let sentenceData;
+let nextSentence;
+getSentencesData();
+// assign intial sentence
+let currentSentence = String(currentSentenceElement.innerText);
 
 // CHANGE DIFFICULTY
 function setMode(modeSlection) {
@@ -68,20 +72,19 @@ function startGame() {
 
 	//check for loss condition and display time left.
 	const checkEndGameInterval = setInterval(() => {
-		const computedStyle = window.getComputedStyle(progressBar);
-		const currentWidth = parseFloat(computedStyle.getPropertyValue("width"));
-		const secondsLeft = Math.floor((currentWidth * 30) / initialWidth);
-		progressBar.innerText = `${secondsLeft}s`;
+		displayTimeLeft();
 
 		switch (true) {
 			case secondsLeft < 0.1:
-				progressBar.setAttribute("style", "width:3px !important;");
+				progressBar.setAttribute("style", "width:3px !important; color: black;");
+				progressBar.innerText = "Time is up!";
 				clearInterval(checkEndGameInterval);
-				alert("game over"); //TO DO - add end game logic to display modal with score and type name if new high score
 				gameIsRunning = false;
 				startButton.innerHTML = "Try again!";
 				startButton.style.cursor = "";
 				startButton.style.opacity = "1";
+				// reveal add new sentence modal
+				submitSentenceModal.style.display = "block";
 				break;
 			case secondsLeft < 10:
 				progressBar.style.backgroundColor = "rgb(49, 34, 0)";
@@ -105,7 +108,6 @@ inputString.addEventListener("keypress", function (e) {
 			// adjust progress bar
 			let timeToAdd = enteredSentence.length / 4;
 			let timeInPixels = (initialWidth * timeToAdd) / 30;
-
 			let computedStyle = window.getComputedStyle(progressBar);
 			let width = parseFloat(computedStyle.getPropertyValue("width"));
 			let newWidth = timeInPixels + width;
@@ -127,12 +129,12 @@ inputString.addEventListener("keypress", function (e) {
 		}
 		currentSentence = nextSentence;
 		currentSentenceElement.innerHTML = currentSentence;
-		httpGetAsync(GET_REQ_URL, setNextSentence); // api call here
+		nextSentence = assignRandomSentence();
 	}
 });
 
 // STRING COMPARING FOR NOOB MODE
-// console.log('Hey'.startsWith('H')); // Prints true  <-- somthing to use?
+// TO DO -> console.log('Hey'.startsWith('H')); // Prints true  <-- somthing to use?
 function compareSentencesLive(onOff) {
 	if (onOff === "on") {
 		inputString.addEventListener("keyup", makeGreen);
@@ -145,7 +147,7 @@ function compareSentencesLive(onOff) {
 }
 
 function makeGreen() {
-	// WEIRD SHIT GOING ON, NEEDS REFACTORING. use css ::before and ::after
+	// TO DO -> WEIRD SHIT GOING ON, NEEDS REFACTORING. use css ::before and ::after ?
 	const enteredSentence = String(inputString.value);
 	console.log(enteredSentence);
 	let sLength = enteredSentence.length;
@@ -158,22 +160,13 @@ function makeGreen() {
 	}
 }
 
-// API call function to get a new sentence and place it into nextSentence
-function httpGetAsync(url, callback) {
-	let xmlHttp = new XMLHttpRequest();
-	xmlHttp.onreadystatechange = function () {
-		if (xmlHttp.readyState == 4 && xmlHttp.status == 200) callback(xmlHttp.responseText);
-	};
-	xmlHttp.open("GET", url, true); // true for asynchronous
-	xmlHttp.send(null);
-}
-
-function setNextSentence(responseSentence) {
-	nextSentence = responseSentence;
+function assignRandomSentence() {
+	const randomIndex = Math.floor(Math.random() * sentenceData.array.length);
+	console.log("extracting sentence at index " + randomIndex);
+	return sentenceData.array[randomIndex].sentence;
 }
 
 // Good job Pop-ups
-
 function sayGoodJob() {
 	popUpContainer.classList.toggle("showPopUp");
 	setTimeout(() => {
@@ -181,6 +174,14 @@ function sayGoodJob() {
 	}, 300);
 }
 
+function displayTimeLeft() {
+	const computedStyle = window.getComputedStyle(progressBar);
+	const currentWidth = parseFloat(computedStyle.getPropertyValue("width"));
+	secondsLeft = Math.floor((currentWidth * 30) / initialWidth);
+	progressBar.innerText = `${secondsLeft}s`;
+}
+
+function endGame(interval) {}
 // SWITCH THE AJAX GET DONE WITH JQUERRY WITH THIS STANDARD BOILERPLATE
 // const xhr = new XMLHttpRequest();
 // const url = "https://api-to-call.com/endpoint";

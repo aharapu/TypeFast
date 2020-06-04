@@ -1,9 +1,12 @@
 // Get the modal
 const modal = document.getElementById("modal");
+const submitSentenceModal = document.getElementById("submitSentenceModal");
 // Get the buttons that opens the modal
 const highScoresBtn = document.getElementById("high-scores");
 const howToButton = document.getElementById("howTo-button");
-// Get handlebarsjs templates
+// Get imput to submit sentence
+const sentenceInputField = document.getElementById("newSentence");
+// Get handnebarsjs templates
 const highScoreTemplate = document.getElementById("high-score-template").innerHTML;
 const howToTemplate = document.getElementById("howTo-template").innerHTML;
 // Handlebars helper
@@ -20,14 +23,23 @@ const howToData = {
 	howTo2:
 		"Make sure you get the right capitalization and all the symbols in the right place. This is harder than it seems!",
 	howTo3:
-		"You start with 30 seconds. Each correct submission gives you extra time. The longer the sentence typed, the more time you gain."
-	};
+		"You start with 30 seconds. Each correct submission gives you extra time. The longer the sentence typed, the more time you gain.",
+};
 
 highScoresBtn.addEventListener("click", () => {
 	generateModal(highScoreTemplate, highScoreData);
 });
 howToButton.addEventListener("click", () => {
 	generateModal(howToTemplate, howToData);
+});
+
+sentenceInputField.addEventListener("keypress", function (e) {
+	if (e.key === "Enter") {
+		const sentenceToAdd = e.target.value;
+		console.log("submitting sentence:", sentenceToAdd);
+		postNewSentence(sentenceToAdd);
+		submitSentenceModal.style.display = "none";
+	}
 });
 
 function generateModal(template, contextData) {
@@ -47,4 +59,3 @@ const closeBtn = document.getElementById("close");
 closeBtn.onclick = function () {
 	modal.style.display = "none";
 };
-
