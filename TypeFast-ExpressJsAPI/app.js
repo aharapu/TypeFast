@@ -73,9 +73,7 @@ sentenceRouter.delete('/validationList/delete', (req, res, next) => {
 	res.status(204).send();
   });
 
-const PORT = 4001;
-
-app.listen(PORT, () => {
+app.listen(process.env.PORT || 5000, () => {
 	console.log(`Listening on port ${PORT}`);
 });
 
