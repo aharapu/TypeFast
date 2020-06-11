@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Type Fast</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" media="screen" href="style/main.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="style/modal.css" />
+		<script src="script/jquery-3.5.0.js" defer></script>
+		<script src="script/apiCalls.js" defer></script>
+		<script src="script/modal.js" defer></script>
+		<script src="script/main.js" defer></script>
+
+		<!-- Include Handlebars from a CDN -->
+		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+		<script id="high-score-template" type="text/x-handlebars-template">
+			<div class="leaderboard">
+				<table class="leaderboard-table">
+					{{#each players}}
+						<tr>
+							<th>
+								{{incremented @index}}
+							</th>
+							<td>
+								{{name}}
+							</td>
+							<td>
+								{{score}}
+							</td>
+						</tr>
+					{{/each}}
+				</table>
+			</div>
+		</script>
+		<script id="howTo-template" type="text/x-handlebars-template">
+			<div class="howTo">
+				<p>
+					{{howTo1}}<br />
+					<br />{{howTo2}}<br />
+					<br />{{howTo3}}
+				</p>
+			</div>
+		</script>
+	</head>
+	<body>
+		<div id="background-image"></div>
+		<header>
+			<nav>
+				<button id="howTo-button" type="button">How to play.</button>
+				<button id="high-scores" type="button">High scores.</button>
+			</nav>
+			<br />
+			<p>
+				Make a choice and make sure it's a good one!
+			</p>
+			<nav>
+				<button id="noob-mode" type="button" class="modeButton">Noob mode.</button>
+				<button id="normal-mode" type="button" class="modeButton">Normal mode.</button>
+				<button id="beast-mode" type="button" class="modeButton">Beast mode.</button>
+				<br />
+				<br />
+				<button id="start-button" type="button" class="green">START!</button>
+			</nav>
+		</header>
+		<main>
+			<section id="text-box">
+				<div class="tBoxElement">
+					<p id="example-sentence">
+						<span id="first-part"></span>
+						<span id="current-sentence">Type this first.</span>
+					</p>
+				</div>
+				<input
+					class="tBoxElement"
+					id="input-string"
+					type="string"
+					placeholder="type here"
+				/>
+			</section>
+
+			<section id="result">
+				<p class="tBoxElement" id="current-result">Let's see how you do...</p>
+				<div class="progress-container">
+					<div id="progress-bar">You start with 30s</div>
+				</div>
+			</section>
+		</main>
+
+		<div id="modal" class="modal">
+			<div class="modal-content">
+				<span id="close">&times;</span>
+				<div id="handlebars-container"></div>
+			</div>
+		</div>
+
+		<div id="popUpContainer" class="popUpContainer">
+			<h1 id="popUpText">BINE BA, AI FACUT TREABA!</h1>
+		</div>
+
+		<div id="submitSentenceModal" class="submitSentence modal">
+			<div id="noFlex" class="modal-content">
+				<p>
+					Thank you for playing. Add a sentence, and if the boss likes it, he will add it
+					to the rest of them for you to play with. Please don't use any dirty words :P
+					Oh, and keep it under 70 characters, please.
+				</p>
+				<br />
+				<input id="newSentence" class="modalInput" type="text" maxlength="70" />
+			</div>
+		</div>
+		<div id="writeNameModal" class="modal">
+			<div id="noFlex" class="modal-content">
+				<p>
+					You did amazing! You got a new high score! Write your name for everyone to see!
+				</p>
+				<br />
+				<input id="newName" class="modalInput" type="text" maxlength="25" />
+			</div>
+		</div>
+	</body>
+</html>
