@@ -1,1 +1,1 @@
-web: node node TypeFast-ExpressJsAPI/app.js
+web: node TypeFast-ExpressJsAPI/app.js
