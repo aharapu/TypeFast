@@ -37,8 +37,7 @@ sentenceInputField.addEventListener("keypress", function (e) {
 	if (e.key === "Enter") {
 		const sentenceToAdd = e.target.value;
 		sentenceInputField.value = '';
-		console.log("submitting sentence:", sentenceToAdd);
-		postNewSentence(sentenceToAdd);
+		if (sentenceToAdd) postNewSentence(sentenceToAdd);
 		submitSentenceModal.style.display = "none";
 		checkForHighScore();
 	}
@@ -46,9 +45,10 @@ sentenceInputField.addEventListener("keypress", function (e) {
 
 nameInputField.addEventListener("keypress", function (e) {
 	if (e.key === "Enter") {
-		const nameToAdd = e.target.value;
+		let nameToAdd = e.target.value;
 		nameInputField.value = '';
 		console.log("submitting name:", nameToAdd);
+		if (!nameToAdd) nameToAdd = 'mystery player';
 		sendNewHighScore(nameToAdd, score);
 		writeNameModal.style.display = "none";	
 		getHighScoreData();	

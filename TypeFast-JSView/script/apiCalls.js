@@ -10,7 +10,6 @@ function getHighScoreData() {
 					"Content-type": "application/json",
 				},
 			});
-			console.log(response);
 			if (response.ok) {
 				return await response.json();
 			}
@@ -21,7 +20,6 @@ function getHighScoreData() {
 
 	callGet().then((jsonResponse) => {
 		highScoreData = jsonResponse;
-		console.log(highScoreData);
 		scoreToBeat = jsonResponse.players[9].score;
 	});
 }
@@ -38,10 +36,7 @@ function getSentencesData() {
 			console.log(response);
 			if (response.ok) {
 				sentenceData = await response.json();
-				console.log("array in sentences response.ok", sentenceData);
-
 				const randomIndex = Math.floor(Math.random() * sentenceData.array.length);
-				console.log("extracting sentence at index " + randomIndex);
 				nextSentence = sentenceData.array[randomIndex].sentence;
 			}
 		} catch (error) {
@@ -63,10 +58,8 @@ function postNewSentence(sentence = "a default sentence if none is passed") {
 				},
 				body: sentenceAsData,
 			});
-			console.log(response);
 			if (response.ok) {
 				jsonResponse = await response.json();
-				console.log("webapi response to posting sentence:", jsonResponse);
 			}
 		} catch (error) {
 			console.log(error);
@@ -87,9 +80,8 @@ function sendNewHighScore(name, score) {
 				},
 				body: newScoreAsData
 			});
-			console.log(response);
 			if (response.ok) {
-				console.log("put new score call response status:", response.status);
+				console.log(response.status);
 			}
 		} catch (error) {
 			console.log(error);

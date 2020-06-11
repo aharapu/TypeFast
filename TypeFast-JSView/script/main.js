@@ -27,6 +27,10 @@ beastModeButton.addEventListener('click', () => {
 	setMode('beast');
 });
 
+// game logic initialization
+let streak = 0;
+let level = 1;
+let correctSentenceCount = 0;
 let timeOver = false;
 let gameIsRunning = false;
 let score = 0;
@@ -34,6 +38,7 @@ let secondsLeft = 30;
 let isModeSelected = false;
 let computedStyle = window.getComputedStyle(progressBar);
 let initialWidth = parseFloat(computedStyle.getPropertyValue('width')); // get initial width reference
+
 // fetch sentences array
 let sentenceData;
 let nextSentence;
@@ -60,6 +65,8 @@ function setMode(modeSlection) {
 function startGame() {
 	gameIsRunning = true;
 	score = 0;
+	streak = 0;
+	correctSentenceCount = 0;
 	if (!isModeSelected) {
 		setMode('normal');
 	}
@@ -84,16 +91,23 @@ function startGame() {
 
 		switch (true) {
 			case secondsLeft < 0.1:
+				gameIsRunning = false;
+				// freeze time bar
 				progressBar.setAttribute('style', 'width:3px !important; color: black;');
 				progressBar.innerText = 'Time is up!';
 				clearInterval(checkEndGameInterval);
-				gameIsRunning = false;
 				toggleButtonActiveInactive(startButton, 'Try again!');
 				toggleButtonActiveInactive(highScoresBtn);
 				toggleButtonActiveInactive(howToButton);
 				// reveal add new sentence modal and focus input
 				submitSentenceModal.style.display = 'block';
 				sentenceInputField.focus();
+				// deactivate input area
+				inputString.value = ''
+				inputString.style.pointerEvents = 'none';
+				// reset first sentence
+				currentSentence = 'Type this first.';
+				currentSentenceElement.innerHTML = currentSentence;
 				break;
 			case secondsLeft < 10:
 				progressBar.style.backgroundColor = 'rgb(49, 34, 0)';
@@ -113,16 +127,18 @@ inputString.addEventListener('keypress', function (e) {
 		const enteredSentence = String(inputString.value);
 		inputString.value = ''; // clearing the text after keypress
 		if (enteredSentence === currentSentence) {
-			sayGoodJob();
 			// adjust progress bar
-			let timeToAdd = enteredSentence.length / 4;
+			let timeToAdd = Math.max( (enteredSentence.length / 4) - (correctSentenceCount / 10), 0);
 			let timeInPixels = (initialWidth * timeToAdd) / 30;
 			let computedStyle = window.getComputedStyle(progressBar);
 			let width = parseFloat(computedStyle.getPropertyValue('width'));
-			let newWidth = timeInPixels + width;
+			let newWidth = Math.min(timeInPixels + width, initialWidth);
 			progressBar.setAttribute('style', 'width: ' + newWidth + 'px');
-			// increase score
+			// adjust score, streak and level
 			score += enteredSentence.length;
+			streak += 1;
+			correctSentenceCount += 1;
+			sayGoodJob();
 
 			// timeout is a rendering workaround to trigger the transition correctly
 			setTimeout(() => {
@@ -131,11 +147,12 @@ inputString.addEventListener('keypress', function (e) {
 					'style',
 					'width:0px !important; transition: width ' + newWidthInSeconds + 's linear;',
 				);
-			}, 50);
+			}, 20);
 
 			currentResult.innerHTML = 'Good job, try another one!';
 		} else {
 			currentResult.innerHTML = 'You wasted time, try another sentence!';
+			streak = 0;
 		}
 		currentSentence = nextSentence;
 		currentSentenceElement.innerHTML = currentSentence;
@@ -174,7 +191,6 @@ function compareSentencesLive(onOff) {
 function makeGreen() {
 	// TO DO -> WEIRD SHIT GOING ON, NEEDS REFACTORING. use css ::before and ::after ?
 	const enteredSentence = String(inputString.value);
-	console.log(enteredSentence);
 	let sLength = enteredSentence.length;
 	if (
 		sLength <= currentSentence.length &&
@@ -187,15 +203,21 @@ function makeGreen() {
 
 function assignRandomSentence() {
 	const randomIndex = Math.floor(Math.random() * sentenceData.array.length);
-	console.log('extracting sentence at index ' + randomIndex);
 	return sentenceData.array[randomIndex].sentence;
 }
 
 // Good job Pop-ups
 popUpTextArray = ['YaaaaS!', 'GOOD JOB!', 'Keep going!', 'ONE MORE!', 'Boom Baby!', 'LOVE IT!'];
 function sayGoodJob() {
-	const randOption = Math.floor(Math.random() * 6);
-	document.querySelector('#popUpText').innerHTML = popUpTextArray[randOption];
+	if (correctSentenceCount % 10 === 0) {
+		document.querySelector('#popUpText').innerHTML = `LEVEL ${correctSentenceCount / 10 + 1}`;
+	} else if (streak % 5 === 0) {
+		document.querySelector('#popUpText').innerHTML = `${streak} STREAK!`;
+	} else {
+		const randOption = Math.floor(Math.random() * 6);
+		document.querySelector('#popUpText').innerHTML = popUpTextArray[randOption];
+	}
+
 	popUpContainer.classList.toggle('showPopUp');
 	setTimeout(() => {
 		popUpContainer.classList.toggle('showPopUp');

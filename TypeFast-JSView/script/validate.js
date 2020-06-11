@@ -1,7 +1,5 @@
 const API_URL = 'https://typefastgame.herokuapp.com';
 
-let validationData;
-getValidationData();
 const sentenceDiv = document.getElementById("sentence");
 const addButton = document.getElementById("addButton");
 const deleteButton = document.getElementById("deleteButton");
@@ -9,33 +7,8 @@ const deleteButton = document.getElementById("deleteButton");
 addButton.addEventListener("click", addLast);
 deleteButton.addEventListener("click", deleteLast);
 
-function getValidationData() {
-	const callGet = async () => {
-		try {
-			const response = await fetch(`${API_URL}/sentences/validationList`, {
-				method: "GET",
-				headers: {
-					"Content-type": "application/json",
-				},
-			});
-			console.log(response);
-			if (response.ok) {
-				validationData = await response.json();
-				console.log("array in sentences response.ok", validationData.array);
-				if (validationData.array.length > 0) {
-					sentenceDiv.innerText =
-						validationData.array[validationData.array.length - 1].sentence;
-				} else {
-					turnOffButtonsAndSayGodBye();
-				}
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
-	callGet();
-}
+let validationData;
+getValidationData();
 
 function deleteLast() {
 	const callDelete = async () => {
@@ -79,6 +52,34 @@ function addLast() {
 
 	callPut();
 	getValidationData();
+}
+
+function getValidationData() {
+	const callGet = async () => {
+		try {
+			const response = await fetch(`${API_URL}/sentences/validationList`, {
+				method: "GET",
+				headers: {
+					"Content-type": "application/json",
+				},
+			});
+			console.log(response);
+			if (response.ok) {
+				validationData = await response.json();
+				console.log("array in sentences response.ok", validationData.array);
+				if (validationData.array.length > 0) {
+					sentenceDiv.innerText =
+						validationData.array[validationData.array.length - 1].sentence;
+				} else {
+					turnOffButtonsAndSayGodBye();
+				}
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	callGet();
 }
 
 function turnOffButtonsAndSayGodBye() {

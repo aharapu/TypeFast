@@ -59,7 +59,7 @@ sentenceRouter.get("/validationList", (req, res, next) => {
 sentenceRouter.put("/validationList/add", (req, res, next) => {
 	const pendingSentences = require("./pendingSentences.json");
 	const sentenceToAdd = pendingSentences.array[pendingSentences.array.length - 1];
-	console.log("adding from validation to sentenc:", sentenceToAdd);
+	console.log("adding from validation to sentences.json:", sentenceToAdd);
 	const sentences = require("./sentences.json");
 	sentences.array.push(sentenceToAdd);
 	const sentencessAsData = JSON.stringify(sentences);
