@@ -74,7 +74,7 @@ sentenceRouter.delete('/validationList/delete', (req, res, next) => {
   });
 
 app.listen(process.env.PORT || 5000, () => {
-	console.log(`Listening on port ${PORT}`);
+	console.log(`Listening on port ${process.env.PORT} or 5000`);
 });
 
 function popLastSentence() {
