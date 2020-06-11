@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4001';
+const API_URL = 'https://typefastgame.herokuapp.com';
 
 // call API functions
 function getHighScoreData() {
@@ -29,7 +29,7 @@ function getHighScoreData() {
 function getSentencesData() {
 	const callGet = async () => {
 		try {
-			const response = await fetch("http://localhost:4001/sentences", {
+			const response = await fetch(`${API_URL}/sentences`, {
 				method: "GET",
 				headers: {
 					"Content-type": "application/json",
@@ -56,7 +56,7 @@ function postNewSentence(sentence = "a default sentence if none is passed") {
 	sentenceAsData = JSON.stringify({ sentence: sentence });
 	const callPost = async () => {
 		try {
-			const response = await fetch("http://localhost:4001/sentences", {
+			const response = await fetch(`${API_URL}/sentences`, {
 				method: "POST",
 				headers: {
 					"Content-type": "application/json",
@@ -80,7 +80,7 @@ function sendNewHighScore(name, score) {
 	newScoreAsData = JSON.stringify( { name: name, score: score });
 	const callPut = async () => {
 		try {
-			const response = await fetch("http://localhost:4001/highScores/newHighScore", {
+			const response = await fetch(`${API_URL}/highScores/newHighScore`, {
 				method: "PUT",
 				headers: {
 					"Content-type": "application/json",
