@@ -1,3 +1,5 @@
+const API_URL = 'https://typefastgame.herokuapp.com';
+
 let validationData;
 getValidationData();
 const sentenceDiv = document.getElementById("sentence");
@@ -10,7 +12,7 @@ deleteButton.addEventListener("click", deleteLast);
 function getValidationData() {
 	const callGet = async () => {
 		try {
-			const response = await fetch("http://localhost:4001/sentences/validationList", {
+			const response = await fetch(`${API_URL}/sentences/validationList`, {
 				method: "GET",
 				headers: {
 					"Content-type": "application/json",
@@ -38,7 +40,7 @@ function getValidationData() {
 function deleteLast() {
 	const callDelete = async () => {
 		try {
-			const response = await fetch("http://localhost:4001/sentences/validationList/delete", {
+			const response = await fetch(`${API_URL}/sentences/validationList/delete`, {
 				method: "DELETE",
 				headers: {
 					"Content-type": "application/json",
@@ -60,7 +62,7 @@ function deleteLast() {
 function addLast() {
 	const callPut = async () => {
 		try {
-			const response = await fetch("http://localhost:4001/sentences/validationList/add", {
+			const response = await fetch(`${API_URL}/sentences/validationList/add`, {
 				method: "PUT",
 				headers: {
 					"Content-type": "application/json",
