@@ -5,7 +5,7 @@ const writeNameModal = document.getElementById("writeNameModal");
 // Get the buttons that opens the modal
 const highScoresBtn = document.getElementById("high-scores");
 const howToButton = document.getElementById("howTo-button");
-// Get imput to submit sentence and submit name
+// Get input to submit sentence and submit name
 const sentenceInputField = document.getElementById("newSentence");
 const nameInputField = document.getElementById("newName");
 // Get handnebarsjs templates
@@ -36,6 +36,7 @@ howToButton.addEventListener("click", () => {
 sentenceInputField.addEventListener("keypress", function (e) {
 	if (e.key === "Enter") {
 		const sentenceToAdd = e.target.value;
+		sentenceInputField.value = '';
 		console.log("submitting sentence:", sentenceToAdd);
 		postNewSentence(sentenceToAdd);
 		submitSentenceModal.style.display = "none";
@@ -46,6 +47,7 @@ sentenceInputField.addEventListener("keypress", function (e) {
 nameInputField.addEventListener("keypress", function (e) {
 	if (e.key === "Enter") {
 		const nameToAdd = e.target.value;
+		nameInputField.value = '';
 		console.log("submitting name:", nameToAdd);
 		sendNewHighScore(nameToAdd, score);
 		writeNameModal.style.display = "none";	
@@ -74,4 +76,5 @@ closeBtn.onclick = function () {
 function checkForHighScore() {
 	if (score < scoreToBeat) return;
 	writeNameModal.style.display = "block";
+	nameInputField.focus();
 }

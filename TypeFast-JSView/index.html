@@ -60,7 +60,7 @@
 				<button id="beast-mode" type="button" class="modeButton">Beast mode.</button>
 				<br />
 				<br />
-				<button class="green" id="start-button" type="button">START!</button>
+				<button id="start-button" type="button" class="green">START!</button>
 			</nav>
 		</header>
 		<main>
@@ -95,7 +95,7 @@
 		</div>
 
 		<div id="popUpContainer" class="popUpContainer">
-			<h1>BINE BA, AI FACUT TREABA!</h1>
+			<h1 id="popUpText">BINE BA, AI FACUT TREABA!</h1>
 		</div>
 
 		<div id="submitSentenceModal" class="submitSentence modal">
@@ -103,10 +103,10 @@
 				<p>
 					Thank you for playing. Add a sentence, and if the boss likes it, he will add it
 					to the rest of them for you to play with. Please don't use any dirty words :P
-					Oh, and keep it under 30 characters, please.
+					Oh, and keep it under 70 characters, please.
 				</p>
 				<br />
-				<input id="newSentence" type="text" maxlength="50" />
+				<input id="newSentence" class="modalInput" type="text" maxlength="70" />
 			</div>
 		</div>
 		<div id="writeNameModal" class="modal">
@@ -115,7 +115,7 @@
 					You did amazing! You got a new high score! Write your name for everyone to see!
 				</p>
 				<br />
-				<input id="newName" type="text" maxlength="15" />
+				<input id="newName" class="modalInput" type="text" maxlength="25" />
 			</div>
 		</div>
 	</body>

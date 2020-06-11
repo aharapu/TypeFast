@@ -1,8 +1,10 @@
+const API_URL = 'http://localhost:4001';
+
 // call API functions
 function getHighScoreData() {
 	const callGet = async () => {
 		try {
-			const response = await fetch("http://localhost:4001/highScores", {
+			const response = await fetch(`${API_URL}/highScores`, {
 				method: "GET",
 				headers: {
 					"Content-type": "application/json",

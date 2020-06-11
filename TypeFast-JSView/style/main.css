@@ -61,7 +61,7 @@ nav button {
 	box-shadow: 3px 5px 10px 0 rgba(179, 125, 73, 0.15);
 }
 nav button:hover {
-	background-color: rgb(255, 252, 173);
+	background-color: rgb(255, 252, 173) !important;
 	color: rgb(49, 24, 0);
 }
 button:focus {
@@ -143,6 +143,7 @@ button:focus {
 .progress-container div {
 	background-color: rgb(179, 125, 73);
 	color: rgb(255, 252, 173);
+	white-space: nowrap;
 	font-size: 16px;
 	font-weight: 500;
 	height: 20px;
