@@ -1,18 +1,17 @@
 const mongoose = require('mongoose');
 // use this for local development
-// const { USER, PASS, DBNAME } = { USER: 'admin', PASS: 'rhcn7PcbkgFfuFDl', DBNAME: 'typeFastDB' }; 
+// const { USER, PASS, DBNAME } = { USER: 'admin', PASS: 'rhcn7PcbkgFfuFDl', DBNAME: 'typeFastDB' };
 
 const { MONGO_USER, MONGO_PASS, MONGO_DBNAME } = process.env;
 
 exports.handler = async (event, context, callback) => {
-
 	// callback helper function
-	const sendResponse = body => {
+	const sendResponse = (body) => {
 		callback(null, {
 			statusCode: 200,
 			body: JSON.stringify(body),
 		});
-	}
+	};
 
 	// connect to mongodb atlas
 	mongoose.connect(
@@ -35,12 +34,14 @@ exports.handler = async (event, context, callback) => {
 	});
 	let TypeFast = mongoose.models.TypeFast || mongoose.model('TypeFast', SentenceSchema);
 
-
 	if (event.httpMethod === 'GET') {
 		try {
+			console.log('fetching sentences');
 			const sentences = await TypeFast.find();
+			console.log('sentences:', sentences);
 			sendResponse(sentences);
 		} catch (err) {
+			console.log('fetch error: ', err);
 			sendResponse(err);
 		}
 	}
@@ -54,10 +55,4 @@ exports.handler = async (event, context, callback) => {
 			sendResponse(err);
 		}
 	}
-
-	// const sentences = await TypeFast.find({});
-	// callback(null, {
-	// 	statusCode: 200,
-	// 	body: `i found this: ${sentences}`,
-	// });
 };
