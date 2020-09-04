@@ -16,7 +16,7 @@ exports.handler = async (event, context, callback) => {
 
 	// connect to mongodb atlas
 	mongoose.connect(
-		`mongodb+srv://${USER}:${PASS}@cluster0.4tahb.mongodb.net/${DBNAME}?retryWrites=true&w=majority`,
+		`mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.4tahb.mongodb.net/${MONGO_DBNAME}?retryWrites=true&w=majority`,
 		{ useUnifiedTopology: true, useNewUrlParser: true },
 	);
 	const connection = mongoose.connection;
@@ -35,7 +35,7 @@ exports.handler = async (event, context, callback) => {
 	});
 	let TypeFast = mongoose.models.TypeFast || mongoose.model('TypeFast', SentenceSchema);
 
-	
+
 	if (event.httpMethod === 'GET') {
 		try {
 			const sentences = await TypeFast.find();
