@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 // use this for local development
-// const { USER, PASS, DBNAME } = { USER: 'admin', PASS: 'rhcn7PcbkgFfuFDl', DBNAME: 'typeFastDB' };
+// const { MONGO_USER, MONGO_PASS, MONGO_DBNAME } = {
+// 	MONGO_USER: 'admin',
+// 	MONGO_PASS: 'rhcn7PcbkgFfuFDl',
+// 	MONGO_DBNAME: 'typeFastDB',
+// };
 
 const { MONGO_USER, MONGO_PASS, MONGO_DBNAME } = process.env;
 
@@ -14,10 +18,13 @@ exports.handler = async (event, context, callback) => {
 	};
 
 	// connect to mongodb atlas
-	mongoose.connect(
-		`mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.4tahb.mongodb.net/${MONGO_DBNAME}?retryWrites=true&w=majority`,
-		{ useUnifiedTopology: true, useNewUrlParser: true },
-	);
+	mongoose
+		.connect(
+			`mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.4tahb.mongodb.net/${MONGO_DBNAME}?retryWrites=true&w=majority`,
+			{ useUnifiedTopology: true, useNewUrlParser: true },
+		)
+		.then((res) => console.log(' mongoose connection resolve: ', res))
+		.catch((err) => console.error(err));
 	const connection = mongoose.connection;
 	connection.once('open', function () {
 		console.log('MongoDB connected successfully');
@@ -39,10 +46,10 @@ exports.handler = async (event, context, callback) => {
 			console.log('fetching sentences');
 			const sentences = await TypeFast.find();
 			console.log('sentences:', sentences);
-			sendResponse(sentences);
+			return sendResponse(sentences);
 		} catch (err) {
 			console.log('fetch error: ', err);
-			sendResponse(err);
+			return sendResponse(err);
 		}
 	}
 
