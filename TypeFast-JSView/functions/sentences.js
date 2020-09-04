@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 // use this for local development
-// const { MONGO_USER, MONGO_PASS, MONGO_DBNAME } = {
-// 	MONGO_USER: 'admin',
-// 	MONGO_PASS: 'rhcn7PcbkgFfuFDl',
-// 	MONGO_DBNAME: 'typeFastDB',
-// };
+const { MONGO_USER, MONGO_PASS, MONGO_DBNAME } = {
+	MONGO_USER: 'admin',
+	MONGO_PASS: 'rhcn7PcbkgFfuFDl',
+	MONGO_DBNAME: 'typeFastDB',
+};
 
-const { MONGO_USER, MONGO_PASS, MONGO_DBNAME } = process.env;
+// const { MONGO_USER, MONGO_PASS, MONGO_DBNAME } = process.env;
+let connection = null;
 
 exports.handler = async (event, context, callback) => {
 	// callback helper function
@@ -18,17 +19,23 @@ exports.handler = async (event, context, callback) => {
 	};
 
 	// connect to mongodb atlas
-	mongoose
-		.connect(
-			`mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.4tahb.mongodb.net/${MONGO_DBNAME}?retryWrites=true&w=majority`,
-			{ useUnifiedTopology: true, useNewUrlParser: true },
-		)
-		.then((res) => console.log(' mongoose connection resolve: ', res))
-		.catch((err) => console.error(err));
-	const connection = mongoose.connection;
-	connection.once('open', function () {
-		console.log('MongoDB connected successfully');
-	});
+	if (connection == null) {
+		try {
+			connection = await mongoose.connect(
+				`mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.4tahb.mongodb.net/${MONGO_DBNAME}?retryWrites=true&w=majority`,
+				{
+					useUnifiedTopology: true,
+					useNewUrlParser: true,
+					bufferCommands: false,
+					bufferMaxEntries: 0,
+				},
+			);
+			const conn = mongoose.connection;
+			conn.once('open', () => console.log('MongoDB connected successfully.'));
+		} catch (err) {
+			console.error(err);
+		}
+	}
 
 	// define mongoose schema
 	const SentenceSchema = new mongoose.Schema({
@@ -46,10 +53,12 @@ exports.handler = async (event, context, callback) => {
 			console.log('fetching sentences');
 			const sentences = await TypeFast.find();
 			console.log('sentences:', sentences);
-			return sendResponse(sentences);
+			mongoose.connection.close();
+			sendResponse(sentences);
 		} catch (err) {
 			console.log('fetch error: ', err);
-			return sendResponse(err);
+			mongoose.connection.close();
+			sendResponse(err);
 		}
 	}
 
@@ -58,8 +67,10 @@ exports.handler = async (event, context, callback) => {
 		try {
 			await sentence.save();
 			sendResponse(sentence);
+			mongoose.connection.close();
 		} catch (err) {
 			sendResponse(err);
+			mongoose.connection.close();
 		}
 	}
 };
